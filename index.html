@@ -180,14 +180,14 @@
             border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center;
             justify-content: center; font-size: 0.65rem;
         }
-        .mistake-pinyin { font-size: 0.7rem; color: #aaa; margin-top: 2px; }
+        .mistake-pinyin { font-size: 0.85rem; color: #aaa; margin-top: 2px; }
         .word {
-            position: absolute; font-size: 1.6rem; font-weight: bold; color: var(--word-color);
+            position: absolute; font-size: 2rem; font-weight: bold; color: var(--word-color);
             text-shadow: 0 2px 6px black; pointer-events: none; transition: color 0.15s, transform 0.1s;
             white-space: nowrap; display: flex; flex-direction: column; align-items: center;
         }
-        .word .pinyin { font-size: 0.7rem; font-weight: normal; color: rgba(255,255,255,0.55); text-shadow: 0 1px 2px black; margin-top: 2px; }
-        .word.active { color: var(--word-active); transform: scale(1.12); animation: pulse 0.8s infinite; }
+        .word .pinyin { font-size: 0.85rem; font-weight: normal; color: rgba(255,255,255,0.55); text-shadow: 0 1px 2px black; margin-top: 2px; }
+        .word.active { color: var(--word-active); transform: scale(1.08); animation: pulse 0.8s infinite; }
         @keyframes pulse { 0% { text-shadow: 0 0 10px var(--accent); } 50% { text-shadow: 0 0 20px var(--accent), 0 0 8px var(--accent); } 100% { text-shadow: 0 0 10px var(--accent); } }
         .word.exploding { animation: explodeWord 0.4s ease-out forwards !important; pointer-events: none; }
         @keyframes explodeWord { 0% { color: #00ff88; text-shadow: 0 0 20px #00ff88, 0 0 40px #fff; transform: scale(1.5); opacity:1; } 100% { color: #00ff88; text-shadow: 0 0 30px #00ff88, 0 0 60px #fff; transform: scale(2.2); opacity:0; } }
