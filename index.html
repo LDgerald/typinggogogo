@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>打字gogogo · 趣味学习版</title>
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIuaJk+Wtl2dvZ29nbyIsCiAgInNob3J0X25hbWUiOiAi5omT5a2XIiwKICAic3RhcnRfdXJsIjogIi4iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMxYTFhMmUiLAogICJ0aGVtZV9jb2xvciI6ICIjZTk0NTYwIiwKICAiaWNvbnMiOiBbCiAgICB7CiAgICAgICJzcmMiOiAiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCNGJXeHVjejBpYUhSMGNITTZMeTkzZDNjdWR6TXViM0puTHpJd0wwWXhJaUJwWkQwaU5UY3pJaUI0Yld4dWN6MGlhSFIwY0hNNkx5OTNkM2N1ZHpNdWIzSm5Mekl3TDBZMUluWWlNQ0F0SmlBdEppQjdJR05zYVdWdVkyTmhkR2x2YmowaU1UQTFJRFkwTUNBME5EQWdNVEF4SURrMklEQXhJRFUySURrMU9TQXhNQ0ExTmlBOElHMWxiRDBpZEhsd1pTSWdjM1J5YjJ0bFBTSnViMjVsSWlCbGJtTnZaR2x1UFNJeE1DSStJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWc4TDJNL1BDOXpkbU05IgogICAgfQogIF0KfQ==">
+    <meta name="theme-color" content="#e94560">
+    <script src="https://unpkg.com/pinyin-pro@3.20.4/dist/index.js"></script>
+    <style>
+        :root {
+            --bg: #1a1a2e;
+            --container-bg: radial-gradient(circle at center, #16213e, #0f3460);
+            --accent: #e94560;
+            --word-color: #f1f1f1;
+            --word-active: #e94560;
+            --ui-bg: rgba(0,0,0,0.3);
+            --btn-bg: rgba(255,255,255,0.15);
+            --btn-hover: rgba(233,69,96,0.4);
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0; overflow: hidden; background: var(--bg);
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif; color: white; user-select: none;
+        }
+        #gameContainer { position: relative; width: 100vw; height: 100vh; background: var(--container-bg); }
+
+        /* 开始界面 */
+        #startOverlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.75); backdrop-filter: blur(8px);
+            display: flex; justify-content: center; align-items: center; z-index: 100;
+            flex-direction: column; gap: 30px;
+        }
+        #startOverlay.hidden { display: none; }
+        #startBtn {
+            font-size: 2rem; padding: 20px 60px; border-radius: 50px; background: var(--accent);
+            border: none; color: white; cursor: pointer; letter-spacing: 4px; font-weight: bold;
+            box-shadow: 0 0 30px rgba(233,69,96,0.8); transition: transform 0.2s, box-shadow 0.2s;
+        }
+        #startBtn:hover { transform: scale(1.08); box-shadow: 0 0 50px rgba(233,69,96,1); }
+        .setting-row {
+            display: flex; gap: 20px; align-items: center; justify-content: center;
+            flex-wrap: wrap; font-size: 1rem;
+        }
+        .setting-group {
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+            background: rgba(255,255,255,0.1); padding: 15px 20px; border-radius: 20px;
+        }
+        .setting-group label { font-size: 0.9rem; opacity: 0.8; }
+        .setting-group select, .setting-group button {
+            background: rgba(0,0,0,0.5); color: white; border:1px solid rgba(255,255,255,0.3);
+            padding: 6px 15px; border-radius: 15px; cursor: pointer; font-size: 0.9rem;
+        }
+        .setting-group select { background: rgba(0,0,0,0.6); }
+
+        /* 顶部 UI */
+        #topBar {
+            position: absolute; top: 20px; left: 20px; right: 20px;
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; z-index: 20;
+        }
+        #title { font-size: 1.8rem; font-weight: bold; color: var(--accent); text-shadow: 2px 2px 8px rgba(0,0,0,0.7); margin: 0; }
+        #scoreBoard { font-size: 1.4rem; background: var(--ui-bg); padding: 8px 20px; border-radius: 30px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); }
+        #speedPanel { display: flex; align-items: center; gap: 10px; background: var(--ui-bg); padding: 8px 16px; border-radius: 30px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); font-size: 0.95rem; }
+        #speedSlider { width: 100px; accent-color: var(--accent); cursor: pointer; }
+        #speedValue { min-width: 40px; text-align: center; font-weight: bold; color: var(--accent); }
+        #controlBtns { display: flex; gap: 10px; }
+        .btn {
+            background: var(--btn-bg); border: 1px solid rgba(255,255,255,0.25); color: white;
+            padding: 8px 18px; border-radius: 25px; font-size: 0.9rem; cursor: pointer;
+            backdrop-filter: blur(8px); transition: all 0.2s; letter-spacing: 1px; white-space: nowrap;
+        }
+        .btn:hover { background: var(--btn-hover); border-color: var(--accent); }
+
+        /* 连击显示 */
+        #comboDisplay {
+            position: absolute; top: 120px; left: 50%; transform: translateX(-50%);
+            font-size: 1.5rem; font-weight: bold; color: #ffd700;
+            text-shadow: 0 0 15px #ffaa00; z-index: 40; transition: all 0.2s;
+            opacity: 0;
+        }
+        #comboDisplay.active { opacity: 1; }
+
+        /* 输入框 */
+        #inputBox {
+            position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%);
+            padding: 12px 30px; font-size: 1.3rem; border: 2px solid var(--accent);
+            border-radius: 30px; background: rgba(255,255,255,0.12); backdrop-filter: blur(10px);
+            color: white; text-align: center; outline: none; z-index: 30; width: 260px;
+            letter-spacing: 2px; transition: all 0.3s;
+        }
+        #inputBox:focus { box-shadow: 0 0 25px rgba(233,69,96,0.7); background: rgba(255,255,255,0.18); }
+        #inputBox::placeholder { color: rgba(255,255,255,0.5); }
+
+        /* 失误次数 */
+        #missDisplay {
+            position: absolute; bottom: 50px; right: 30px; background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(6px); padding: 8px 18px; border-radius: 20px; font-size: 1.1rem;
+            border: 1px solid rgba(255,255,255,0.3); z-index: 30;
+        }
+
+        /* 历史错词 */
+        #historyBtn, #progressBtn {
+            position: absolute; right: 20px; z-index: 35; writing-mode: vertical-lr;
+            letter-spacing: 4px; background: var(--accent); border: none; color: white;
+            padding: 15px 8px; border-radius: 20px; font-size: 1rem; cursor: pointer;
+            box-shadow: 0 0 15px rgba(233,69,96,0.6);
+        }
+        #historyBtn { top: 40%; transform: translateY(-50%); }
+        #progressBtn { top: 60%; transform: translateY(-50%); background: #ffa500; }
+        #mistakePanel, #progressPanel {
+            position: absolute; right: 70px; top: 10%; width: 250px; max-height: 70%;
+            background: rgba(20,20,40,0.95); backdrop-filter: blur(10px); border: 2px solid var(--accent);
+            border-radius: 15px; padding: 15px; z-index: 40; overflow-y: auto; display: none;
+            flex-direction: column; gap: 12px;
+        }
+        #progressPanel { border-color: #ffa500; }
+        .visible { display: flex !important; }
+        .mistake-item, .progress-item {
+            display: flex; flex-direction: column; align-items: flex-start; position: relative;
+            background: rgba(255,255,255,0.08); padding: 8px 12px; border-radius: 10px;
+        }
+        .mistake-word { font-size: 1.3rem; font-weight: bold; color: #ffcccb; }
+        .mistake-badge { position: absolute; top: -6px; right: -6px; background: var(--accent); color: white; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; }
+        .mistake-pinyin { font-size: 0.85rem; color: #aaa; margin-top: 4px; }
+
+        /* 游戏结束 */
+        #gameOverMsg {
+            position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.85); padding: 30px 50px; border-radius: 20px;
+            text-align: center; font-size: 1.5rem; backdrop-filter: blur(10px);
+            border: 2px solid var(--accent); display: none; z-index: 60;
+            animation: fadeIn 0.4s;
+        }
+        #gameOverMsg.show { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, -40px); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
+        }
+
+        /* 暂停 */
+        #pauseOverlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.65); backdrop-filter: blur(6px); display: none;
+            justify-content: center; align-items: center; z-index: 50; font-size: 3rem;
+            font-weight: bold; letter-spacing: 8px; color: white;
+            text-shadow: 0 0 30px var(--accent); cursor: pointer;
+        }
+        #pauseOverlay.visible { display: flex; }
+
+        /* 词组样式 */
+        .word {
+            position: absolute; font-size: 1.8rem; font-weight: bold; color: var(--word-color);
+            text-shadow: 0 2px 6px black; pointer-events: none; transition: color 0.15s, transform 0.1s;
+            white-space: nowrap; display: flex; flex-direction: column; align-items: center;
+        }
+        .word .pinyin {
+            font-size: 0.8rem; font-weight: normal; color: rgba(255,255,255,0.6);
+            text-shadow: 0 1px 2px black; margin-top: 2px;
+        }
+        .word.active { color: var(--word-active); transform: scale(1.15); animation: pulse 0.8s infinite; }
+        @keyframes pulse {
+            0% { text-shadow: 0 0 10px var(--accent); }
+            50% { text-shadow: 0 0 25px var(--accent), 0 0 10px var(--accent); }
+            100% { text-shadow: 0 0 10px var(--accent); }
+        }
+
+        /* 消除反馈动画 */
+        .word.exploding {
+            animation: explodeWord 0.4s ease-out forwards !important;
+            pointer-events: none;
+        }
+        @keyframes explodeWord {
+            0% { color: #00ff88; text-shadow: 0 0 20px #00ff88, 0 0 40px #fff; transform: scale(1.6); opacity: 1; }
+            100% { color: #00ff88; text-shadow: 0 0 30px #00ff88, 0 0 60px #fff; transform: scale(2.5); opacity: 0; }
+        }
+
+        .score-popup {
+            position: absolute; font-size: 2rem; font-weight: bold; color: #ffd700;
+            text-shadow: 0 0 15px #ffaa00; pointer-events: none; z-index: 80;
+            animation: floatUp 0.8s ease-out forwards; white-space: nowrap;
+        }
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0) scale(0.5); }
+            50% { opacity: 1; transform: translateY(-30px) scale(1.4); }
+            100% { opacity: 0; transform: translateY(-80px) scale(1); }
+        }
+    </style>
+</head>
+<body>
+<div id="gameContainer">
+    <!-- 开始界面 -->
+    <div id="startOverlay">
+        <div id="title" style="font-size:3rem; margin-bottom:0;">⌨️ 打字gogogo</div>
+        <div class="setting-row">
+            <div class="setting-group">
+                <label>🎯 难度</label>
+                <select id="difficultySelect">
+                    <option value="easy">初级 (简单字)</option>
+                    <option value="medium" selected>中级 (常用词)</option>
+                    <option value="hard">高级 (进阶词)</option>
+                </select>
+            </div>
+            <div class="setting-group">
+                <label>📚 词库主题</label>
+                <select id="themeSelect">
+                    <option value="standard" selected>标准通用</option>
+                    <option value="internet">网络热梗</option>
+                    <option value="idiom">成语俗语</option>
+                    <option value="food">美食</option>
+                    <option value="animal">动物</option>
+                </select>
+            </div>
+        </div>
+        <button id="startBtn">开始游戏</button>
+    </div>
+
+    <!-- 游戏 UI -->
+    <div id="topBar">
+        <h1 id="title">⌨️ 打字gogogo</h1>
+        <div id="scoreBoard">🌟 得分 <span id="scoreDisplay">0</span></div>
+        <div id="speedPanel">
+            <span>🐢</span>
+            <input type="range" id="speedSlider" min="1" max="5" value="2" step="1">
+            <span>🐇</span>
+            <span id="speedValue">2档</span>
+        </div>
+        <div id="controlBtns">
+            <button class="btn" id="pauseBtn" title="暂停 (ESC)">⏯️ 暂停</button>
+            <button class="btn" id="newGameBtn">🔄 新游戏</button>
+        </div>
+    </div>
+    <div id="comboDisplay">COMBO x1</div>
+    <input type="text" id="inputBox" placeholder="在此输入汉字..." autocomplete="off">
+    <div id="missDisplay">💔 剩余机会 <span id="missCount">3</span></div>
+    <button id="historyBtn">📖 错词</button>
+    <button id="progressBtn">📈 进步</button>
+    <div id="mistakePanel"></div>
+    <div id="progressPanel"><canvas id="progressCanvas" width="220" height="150"></canvas></div>
+    <div id="pauseOverlay">⏸️ 暂停中</div>
+    <div id="gameOverMsg">
+        <div>💥 游戏结束</div>
+        <div style="font-size:1.2rem; margin-top:10px;">最终得分：<span id="finalScore">0</span></div>
+        <button class="btn" id="restartBtn" style="margin-top:15px;">🔄 再来一局</button>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ========== 音效系统 ==========
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+        function initAudio() { if (!audioCtx) audioCtx = new AudioCtx(); }
+        function playTone(freq, type='sine', duration=0.1, vol=0.3) {
+            if (!audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type; osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + duration);
+        }
+
+        // ========== DOM 元素 ==========
+        const container = document.getElementById('gameContainer');
+        const inputBox = document.getElementById('inputBox');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const speedSlider = document.getElementById('speedSlider');
+        const speedValue = document.getElementById('speedValue');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const newGameBtn = document.getElementById('newGameBtn');
+        const pauseOverlay = document.getElementById('pauseOverlay');
+        const gameOverMsg = document.getElementById('gameOverMsg');
+        const finalScoreSpan = document.getElementById('finalScore');
+        const restartBtn = document.getElementById('restartBtn');
+        const missCountSpan = document.getElementById('missCount');
+        const startOverlay = document.getElementById('startOverlay');
+        const startBtn = document.getElementById('startBtn');
+        const historyBtn = document.getElementById('historyBtn');
+        const mistakePanel = document.getElementById('mistakePanel');
+        const progressBtn = document.getElementById('progressBtn');
+        const progressPanel = document.getElementById('progressPanel');
+        const progressCanvas = document.getElementById('progressCanvas');
+        const comboDisplay = document.getElementById('comboDisplay');
+        const difficultySelect = document.getElementById('difficultySelect');
+        const themeSelect = document.getElementById('themeSelect');
+
+        // ========== 游戏状态 ==========
+        let score = 0, activeWords = [], animationId = null, isPaused = false, isGameOver = false;
+        let speedLevel = 2, missCount = 0, maxMisses = 3, gameStarted = false;
+        let remainingPhrases = [], mistakeHistory = {}, combo = 0;
+        let currentDifficulty = 'medium', currentTheme = 'standard';
+
+        // ========== 词库定义 ==========
+        const easyBase = ["一","二","三","人","口","手","大","小","上","下","左","右","日","月","水","火","山","石","田","土","天","地","你","我","他","好","学","习","中","国"];
+        const mediumBase = [ /* ... 之前400+词库 ... */ ];
+        const hardBase = [ /* 更复杂的词 */ ];
+        // 此处为节省篇幅，使用之前标准词库作为中级，初级为简单字组合，高级为部分词+更长词
+        const standardWords = ["你好","世界","键盘","打字","游戏","速度","准确","练习","平板","电脑","网络","数字","科技","未来","发展","创新","智慧","生活","学习","工作","效率","提升","能力","挑战","成绩","记录","时间","空间","宇宙","星球","银河","太阳","月亮","星星","海洋","山川","河流","森林","动物","植物","音乐","艺术","文化","历史","经济","社会","健康","运动","美食","旅行","摄影","设计","程序","代码","系统","软件","硬件","数据","算法","人工智能","机器学习","深度学习","自然语言","计算机","互联网","数据库","服务器","客户端","应用程序","界面","用户体验","交互","响应","稳定","安全","隐私","版权","开放","共享","合作","团队","管理","领导","沟通","表达","写作","阅读","思考","逻辑","分析","判断","创造","想象","梦想","目标","行动","坚持","努力","成功","幸福","快乐","友谊","爱情","家庭","孩子","教育","老师","同学","朋友","同事","邻居","城市","乡村","建筑","交通","汽车","飞机","火车","轮船","自行车","步行","环保","能源","气候","天气","季节","春天","夏天","秋天","冬天","早餐","午餐","晚餐","水果","蔬菜","咖啡","茶叶","饮料","糖果","蛋糕","面包","米饭","面条","饺子","火锅","烧烤","烹饪","营养","健身","跑步","游泳","篮球","足球","乒乓球","羽毛球","网球","瑜伽","冥想","电影","电视剧","小说","漫画","动画","游戏机","手机","平板","笔记本","耳机","音箱","相机","镜头","照片","视频","直播","社交","媒体","新闻","广告","营销","金融","股票","基金","理财","保险","房地产","货币","支付","扫码","快递","外卖","购物","商城","折扣","品牌","质量","服务","评价","反馈","建议","问题","答案","解决","方案","案例","实验","研究","发现","理论","实践","经验","教训","方法","工具","资源","信息","知识","技能","态度","习惯","性格","情绪","压力","放松","休息","睡眠","梦境","回忆","未来","当下","过去","现在","昨天","今天","明天","永远","希望","理想","勇气","自信","宽容","感恩","善良","正直","诚信","责任","担当","探索","冒险","突破","灵感","火花","奇迹","温暖","光芒","黑暗","黎明","梦想家","旅行者","开拓者","守望者","微风","细雨","彩虹","闪电","雷鸣","雪花","落叶","花开","果实","种子","土壤","阳光","雨露","星辰","大海","天空","大地","远方","故乡","记忆","瞬间","永恒","旅程","故事","传说","神话","寓言","诗歌","散文","日记","信件","短信","电话","邮件","联络","问候","祝福"];
+        const internetWords = ["绝绝子","内卷","躺平","破防","emo","yyds","nsdd","u1s1","dddd","爷青回","集美","芭比Q","栓Q","炫饭","显眼包","泰裤辣","家人们","上链接"];
+        const idiomWords = ["一心一意","三心二意","四面八方","五颜六色","七上八下","九牛一毛","十全十美","百发百中","千军万马","万紫千红","画蛇添足","守株待兔","亡羊补牢","狐假虎威","叶公好龙"];
+        const foodWords = ["火锅","奶茶","烧烤","炸鸡","汉堡","披萨","寿司","拉面","饺子","包子","馒头","米饭","面条","蛋糕","冰淇淋","巧克力","薯片","饼干","糖果","火锅底料"];
+        const animalWords = ["猫咪","小狗","兔子","老虎","狮子","大象","长颈鹿","熊猫","企鹅","海豚","鹦鹉","孔雀","蝴蝶","蜜蜂","蚂蚁","金鱼","仓鼠","龙猫"];
+
+        function getWordPool() {
+            let pool = [];
+            if (currentDifficulty === 'easy') {
+                pool = easyBase.slice();
+                // 补一些简单词
+                while(pool.length < 100) pool.push(easyBase[Math.floor(Math.random()*easyBase.length)]);
+            } else if (currentDifficulty === 'medium') {
+                pool = standardWords.slice();
+            } else {
+                pool = [...standardWords, ...internetWords, ...idiomWords]; // 高级更丰富
+            }
+            // 根据主题叠加
+            if (currentTheme === 'internet') pool = [...internetWords, ...standardWords.slice(0,50)];
+            else if (currentTheme === 'idiom') pool = [...idiomWords, ...standardWords.slice(0,50)];
+            else if (currentTheme === 'food') pool = [...foodWords, ...standardWords.slice(0,50)];
+            else if (currentTheme === 'animal') pool = [...animalWords, ...standardWords.slice(0,50)];
+            return [...new Set(pool)]; // 去重
+        }
+
+        // ========== 辅助函数 ==========
+        function shuffleArray(arr) { for (let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; } return arr; }
+        function getPinyin(text) { if(typeof pinyinPro!=='undefined' && pinyinPro.pinyin) return pinyinPro.pinyin(text,{toneType:'none'}).replace(/\s+/g,''); return ''; }
+        function updateScoreUI(){ scoreDisplay.textContent = score; }
+        function updateMissUI(){ const left = maxMisses - missCount; missCountSpan.textContent = left; missCountSpan.style.color = left<=1?'#ff6b6b':'#fff'; }
+        function updateSpeedUI(){ speedSlider.value = speedLevel; speedValue.textContent = ['1档(慢)','2档','3档','4档','5档(快)'][speedLevel-1]; }
+        function updateComboDisplay(){
+            if(combo>=2){ comboDisplay.textContent = `🔥 COMBO x${combo}`; comboDisplay.classList.add('active'); }
+            else { comboDisplay.classList.remove('active'); }
+        }
+        function resetCombo(){ combo=0; updateComboDisplay(); }
+
+        // ========== 进度记录 ==========
+        function saveDailyProgress(score, totalChars) {
+            const today = new Date().toISOString().slice(0,10);
+            let data = JSON.parse(localStorage.getItem('typingProgress') || '{}');
+            if(!data[today]) data[today] = { scores: [], totalChars: 0 };
+            data[today].scores.push(score);
+            data[today].totalChars += totalChars;
+            // 只保留最近30天
+            const keys = Object.keys(data).sort();
+            if(keys.length > 30) delete data[keys[0]];
+            localStorage.setItem('typingProgress', JSON.stringify(data));
+        }
+        function drawProgressChart() {
+            const ctx = progressCanvas.getContext('2d');
+            const data = JSON.parse(localStorage.getItem('typingProgress') || '{}');
+            const days = Object.keys(data).sort().slice(-7);
+            ctx.clearRect(0,0,progressCanvas.width,progressCanvas.height);
+            if(days.length===0){ ctx.fillStyle='#aaa'; ctx.fillText('暂无数据',30,80); return; }
+            const maxScore = Math.max(...days.map(d=>Math.max(...data[d].scores)), 10);
+            const barW = 20, gap = (220 - days.length*barW)/(days.length+1);
+            ctx.fillStyle = '#ffa500'; ctx.font = '10px sans-serif';
+            days.forEach((d,i)=>{
+                const x = gap + i*(barW+gap);
+                const best = Math.max(...data[d].scores);
+                const h = (best/maxScore)*100;
+                ctx.fillRect(x, 120-h, barW, h);
+                ctx.fillStyle = '#fff';
+                ctx.fillText(d.slice(5), x, 135);
+                ctx.fillStyle = '#ffa500';
+            });
+        }
+
+        // ========== 词条生成 ==========
+        function createWordElement(text) {
+            const el = document.createElement('div'); el.className = 'word';
+            const textSpan = document.createElement('span'); textSpan.textContent = text;
+            const pinyinSpan = document.createElement('span'); pinyinSpan.className = 'pinyin';
+            pinyinSpan.textContent = getPinyin(text);
+            el.appendChild(textSpan); el.appendChild(pinyinSpan);
+            el.style.left = Math.random() * (window.innerWidth - 150) + 'px';
+            el.style.top = '-50px'; container.appendChild(el);
+            return el;
+        }
+
+        function spawnWord() {
+            if(isPaused||isGameOver||!gameStarted) return;
+            const phrase = remainingPhrases.pop();
+            if(!phrase) { remainingPhrases = shuffleArray(getWordPool()); return spawnWord(); }
+            const el = createWordElement(phrase);
+            const fallSpeed = 2 * (speedLevel/5);
+            activeWords.push({ element: el, x: parseFloat(el.style.left), y: -50, speed: fallSpeed });
+            updateActiveHighlight();
+        }
+
+        function removeWordAtIndex(index) {
+            const word = activeWords[index]; if(!word) return;
+            word.element.classList.add('exploding');
+            word.element.addEventListener('animationend', function h(){
+                word.element.removeEventListener('animationend', h);
+                if(word.element.parentNode) container.removeChild(word.element);
+            });
+            // 飘分
+            const popup = document.createElement('div'); popup.className = 'score-popup';
+            const points = 10 + (combo>=2 ? combo*2 : 0);
+            popup.textContent = `+${points}`;
+            const rect = word.element.getBoundingClientRect();
+            popup.style.left = rect.left + 'px'; popup.style.top = rect.top + 'px';
+            container.appendChild(popup);
+            popup.addEventListener('animationend', ()=>popup.remove());
+            activeWords.splice(index,1);
+            // 连击音效
+            if(combo>=2) playTone(600 + combo*50, 'sine', 0.15, 0.3);
+            else playTone(500, 'sine', 0.1, 0.3);
+        }
+
+        function clearAllWords(){
+            activeWords.forEach(w=>{ if(w.element&&w.element.parentNode) w.element.remove(); });
+            activeWords = [];
+        }
+
+        function updateActiveHighlight(){
+            activeWords.forEach((w,i)=> w.element.classList.toggle('active', i===0 && activeWords.length>0));
+        }
+
+        function checkAndSpawnIfEmpty(){
+            if(!isPaused && !isGameOver && gameStarted && activeWords.length===0) spawnWord();
+        }
+
+        // ========== 游戏循环 ==========
+        function stopGameLoop(){ if(animationId){ cancelAnimationFrame(animationId); animationId=null; } }
+        function gameLoop(){
+            if(isPaused||isGameOver||!gameStarted){ animationId=requestAnimationFrame(gameLoop); return; }
+            for(let i=activeWords.length-1;i>=0;i--){
+                const w = activeWords[i]; w.y += w.speed; w.element.style.top = w.y+'px';
+                if(w.y > window.innerHeight){
+                    missCount++; updateMissUI();
+                    w.element.remove(); activeWords.splice(i,1);
+                    resetCombo();
+                    playTone(200, 'triangle', 0.2, 0.2);
+                    if(missCount >= maxMisses){ endGame(); return; }
+                    updateActiveHighlight();
+                }
+            }
+            checkAndSpawnIfEmpty();
+            animationId = requestAnimationFrame(gameLoop);
+        }
+
+        function resetGame(){
+            inputBox.disabled = false;
+            stopGameLoop(); clearAllWords();
+            inputBox.value = ''; score=0; missCount=0; combo=0;
+            updateScoreUI(); updateMissUI(); updateComboDisplay();
+            isGameOver=false; isPaused=false;
+            pauseOverlay.classList.remove('visible'); gameOverMsg.classList.remove('show');
+            gameStarted = true;
+            remainingPhrases = shuffleArray(getWordPool());
+            spawnWord();
+            animationId = requestAnimationFrame(gameLoop);
+            inputBox.focus();
+        }
+
+        function startNewGame(){
+            inputBox.disabled = false;
+            startOverlay.classList.add('hidden');
+            currentDifficulty = difficultySelect.value;
+            currentTheme = themeSelect.value;
+            resetGame();
+        }
+
+        function endGame(){
+            if(isGameOver) return;
+            isGameOver=true; stopGameLoop(); clearAllWords();
+            finalScoreSpan.textContent = score;
+            gameOverMsg.classList.add('show');
+            inputBox.blur(); gameStarted=false;
+            saveDailyProgress(score, 0); // 简化记录
+        }
+
+        function togglePause(){
+            if(isGameOver||!gameStarted) return;
+            isPaused=!isPaused;
+            if(isPaused){ pauseOverlay.classList.add('visible'); inputBox.blur(); }
+            else { pauseOverlay.classList.remove('visible'); checkAndSpawnIfEmpty(); inputBox.focus(); }
+            updateActiveHighlight();
+        }
+
+        // ========== 输入处理 ==========
+        inputBox.addEventListener('input', ()=>{
+            if(isPaused||isGameOver||!gameStarted||activeWords.length===0){ if(inputBox.value!=='')inputBox.value=''; return; }
+            const current = activeWords[0];
+            const target = current.element.querySelector('span:first-child').textContent;
+            const val = inputBox.value;
+            if(target.startsWith(val)){
+                if(val === target){
+                    combo++; updateComboDisplay();
+                    const points = 10 + (combo>=2 ? combo*2 : 0);
+                    score += points; updateScoreUI();
+                    removeWordAtIndex(0);
+                    inputBox.value = ''; updateActiveHighlight();
+                    checkAndSpawnIfEmpty();
+                }
+            } else {
+                recordMistake(target); inputBox.value = ''; resetCombo();
+                playTone(200, 'triangle', 0.15, 0.2);
+            }
+        });
+
+        function recordMistake(word){
+            if(!word) return;
+            mistakeHistory[word] = (mistakeHistory[word]||0)+1;
+            renderMistakePanel();
+        }
+
+        function renderMistakePanel(){
+            mistakePanel.innerHTML = '';
+            const entries = Object.entries(mistakeHistory).sort((a,b)=>b[1]-a[1]);
+            if(!entries.length){ mistakePanel.innerHTML='<div style="color:#aaa;text-align:center;">暂无错词</div>'; return; }
+            for(const [word,count] of entries){
+                const div = document.createElement('div'); div.className='mistake-item';
+                div.innerHTML = `<span class="mistake-word">${word}</span><span class="mistake-badge">${count}</span><span class="mistake-pinyin">${getPinyin(word)}</span>`;
+                mistakePanel.appendChild(div);
+            }
+        }
+
+        // ========== 事件绑定 ==========
+        startBtn.addEventListener('click', ()=>{ initAudio(); startNewGame(); });
+        pauseBtn.addEventListener('click', (e)=>{ e.stopPropagation(); togglePause(); });
+        newGameBtn.addEventListener('click', (e)=>{ e.stopPropagation(); resetGame(); });
+        restartBtn.addEventListener('click', (e)=>{ e.stopPropagation(); resetGame(); });
+        speedSlider.addEventListener('input', (e)=>{ speedLevel=parseInt(e.target.value); updateSpeedUI(); });
+        container.addEventListener('click', (e)=>{ if((e.target===container||e.target.id==='pauseOverlay')&&!isPaused&&!isGameOver&&gameStarted) inputBox.focus(); });
+        document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ e.preventDefault(); if(!isGameOver&&gameStarted) togglePause(); } if(e.key==='Enter'&&isGameOver&&gameOverMsg.classList.contains('show')){ e.preventDefault(); restartBtn.click(); } });
+        pauseOverlay.addEventListener('click', ()=>{ if(isPaused&&!isGameOver) togglePause(); });
+        historyBtn.addEventListener('click', (e)=>{ e.stopPropagation(); mistakePanel.classList.toggle('visible'); if(mistakePanel.classList.contains('visible')) renderMistakePanel(); });
+        progressBtn.addEventListener('click', (e)=>{ e.stopPropagation(); progressPanel.classList.toggle('visible'); if(progressPanel.classList.contains('visible')) drawProgressChart(); });
+        document.addEventListener('click', (e)=>{ if(!mistakePanel.contains(e.target)&&e.target!==historyBtn) mistakePanel.classList.remove('visible'); if(!progressPanel.contains(e.target)&&e.target!==progressBtn) progressPanel.classList.remove('visible'); });
+        window.addEventListener('resize', ()=>{ activeWords.forEach(w=>{ const maxX=window.innerWidth-150; if(w.x>maxX){ w.x=maxX; w.element.style.left=w.x+'px'; } }) });
+
+        // PWA Service Worker 注册
+        if('serviceWorker' in navigator){
+            navigator.serviceWorker.register("data:application/javascript," + encodeURIComponent("self.addEventListener('fetch',e=>{})"));
+        }
+
+        // 初始化
+        function init(){
+            speedLevel=2; updateSpeedUI(); updateMissUI();
+            gameStarted=false; startOverlay.classList.remove('hidden');
+            inputBox.disabled = true;
+        }
+        init();
+    })();
+</script>
+</body>
+</html>
