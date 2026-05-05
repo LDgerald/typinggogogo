@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>打字gogogo · 精简完整版</title>
+    <title>打字gogogo · 白底优化</title>
     <script src="https://unpkg.com/pinyin-pro@3.20.4/dist/index.js"></script>
     <style>
         :root {
@@ -57,6 +57,33 @@
         @keyframes pulse{0%{text-shadow:0 0 10px var(--accent)}50%{text-shadow:0 0 20px var(--accent)}100%{text-shadow:0 0 10px var(--accent)}}
         .word.exploding{animation:explodeWord 0.4s ease-out forwards!important} @keyframes explodeWord{0%{color:#00ff88;transform:scale(1.5);opacity:1}100%{opacity:0}}
         .score-popup{position:absolute;font-size:2.2rem;font-weight:bold;color:#ffd700;z-index:80;animation:floatUp 0.8s ease-out forwards} @keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(0.5)}100%{opacity:0;transform:translateY(-90px) scale(1)}}
+
+        /* 白底模式专用样式 */
+        body.light-mode .word,
+        body.light-mode .word.active,
+        body.light-mode .word .pinyin { text-shadow: none !important; }
+        body.light-mode .word { color: #cc0000 !important; }
+        body.light-mode .word.active { color: #cc0000 !important; }
+        body.light-mode .word .pinyin { color: rgba(0,0,0,0.55) !important; }
+        body.light-mode .setting-group select,
+        body.light-mode #difficultyGroup select,
+        body.light-mode #modeSelect,
+        body.light-mode #themeSelect,
+        body.light-mode #colorSelect {
+            background: #333 !important;
+            color: white !important;
+        }
+        body.light-mode .setting-group,
+        body.light-mode #speedPanel,
+        body.light-mode #controlBtns .btn,
+        body.light-mode #scoreBoard {
+            font-size: 2.1rem !important;
+        }
+        body.light-mode .setting-group select { font-size: 2.1rem !important; }
+        body.light-mode #speedSlider { width: 140px; }
+        body.light-mode #speedValue { font-size: 2.1rem !important; }
+        body.light-mode .btn { font-size: 2.1rem !important; padding: 8px 20px; }
+        body.light-mode #inputBox { font-size: 2rem; width: 400px; }
     </style>
 </head>
 <body>
@@ -105,7 +132,7 @@
         coffee:{bg:'#2c2416',cbg:'radial-gradient(circle at center, #3e2e1a, #1f1500)',a:'#e67e22',w:'#f5f0e6',wa:'#e67e22',uibg:'rgba(0,0,0,0.3)',bbg:'rgba(255,255,255,0.15)',bh:'rgba(230,126,34,0.4)',t:'white',ibg:'rgba(255,255,255,0.12)',py:'rgba(255,220,180,0.7)'},
         ocean:{bg:'#1b2a3a',cbg:'radial-gradient(circle at center, #1e3448, #0f1a26)',a:'#5dade2',w:'#f1f1f1',wa:'#5dade2',uibg:'rgba(0,0,0,0.3)',bbg:'rgba(255,255,255,0.15)',bh:'rgba(93,173,226,0.4)',t:'white',ibg:'rgba(255,255,255,0.12)',py:'rgba(180,220,255,0.7)'},
         purple:{bg:'#282234',cbg:'radial-gradient(circle at center, #362a48, #1b1326)',a:'#bb8fce',w:'#f1f1f1',wa:'#bb8fce',uibg:'rgba(0,0,0,0.3)',bbg:'rgba(255,255,255,0.15)',bh:'rgba(187,143,206,0.4)',t:'white',ibg:'rgba(255,255,255,0.12)',py:'rgba(220,200,240,0.7)'},
-        light:{bg:'#f5f5f5',cbg:'#ffffff',a:'#333333',w:'#222222',wa:'#e94560',uibg:'rgba(0,0,0,0.05)',bbg:'rgba(0,0,0,0.08)',bh:'rgba(0,0,0,0.15)',t:'#222222',ibg:'rgba(0,0,0,0.05)',py:'rgba(0,0,0,0.55)'}
+        light:{bg:'#f5f5f5',cbg:'#ffffff',a:'#333333',w:'#cc0000',wa:'#cc0000',uibg:'rgba(0,0,0,0.05)',bbg:'rgba(0,0,0,0.08)',bh:'rgba(0,0,0,0.15)',t:'#222222',ibg:'rgba(0,0,0,0.05)',py:'rgba(0,0,0,0.6)'}
     };
     function applyColor(name){
         const s=colorSchemes[name],r=document.documentElement.style;
@@ -114,6 +141,7 @@
         r.setProperty('--btn-bg',s.bbg);r.setProperty('--btn-hover',s.bh);r.setProperty('--text-color',s.t);
         r.setProperty('--input-bg',s.ibg);r.setProperty('--pinyin-color',s.py);
         G.style.boxShadow=name==='light'?'0 0 30px rgba(0,0,0,0.15)':'0 0 50px rgba(0,0,0,0.8)';
+        document.body.classList.toggle('light-mode', name==='light');
         localStorage.setItem('typingColorScheme',name);
     }
     const savedColor=localStorage.getItem('typingColorScheme')||'green';CS.value=savedColor;applyColor(savedColor);
@@ -152,8 +180,8 @@
             const best=Math.max(...Object.values(p.progressData).flatMap(d=>d.scores),0);
             const mc=Object.values(p.mistakeHistory).reduce((a,b)=>a+b,0);
             card.innerHTML=`<div><b>${p.name}</b><br><small>🏆 ${best} ❌ ${mc}</small></div><div>${p.id!==appData.currentProfileId?'<button class="switch-btn">使用</button>':'<span style="color:var(--accent)">✔ 使用中</span>'}<button class="delete-btn">🗑️</button></div>`;
-            card.addEventListener('click',e=>{if(e.target.classList.contains('delete-btn')||e.target.classList.contains('switch-btn'))return;if(p.id!==appData.currentProfileId){if(gs&&!igo){if(!confirm('切换角色将结束当前游戏，确定吗？'))return;endGame(false)}updateCurProfileId(p.id);renderProfiles();RL.textContent=curProfile.name;clearAllWords();stopGameLoop();resetGameState()}});
-            card.querySelector('.switch-btn')?.addEventListener('click',e=>{e.stopPropagation();if(gs&&!igo){if(!confirm('切换角色将结束当前游戏，确定吗？'))return;endGame(false)}updateCurProfileId(p.id);renderProfiles();RL.textContent=curProfile.name;clearAllWords();stopGameLoop();resetGameState()});
+            card.addEventListener('click',e=>{if(e.target.classList.contains('delete-btn')||e.target.classList.contains('switch-btn'))return;if(p.id!==appData.currentProfileId){if(gs&&!igo){if(!confirm('切换角色将结束当前游戏，确定吗？'))return;endGame(false)}updateCurProfileId(p.id);renderProfiles();RL.textContent=curProfile.name;clearAllWords();stopLoop();resetGameState()}});
+            card.querySelector('.switch-btn')?.addEventListener('click',e=>{e.stopPropagation();if(gs&&!igo){if(!confirm('切换角色将结束当前游戏，确定吗？'))return;endGame(false)}updateCurProfileId(p.id);renderProfiles();RL.textContent=curProfile.name;clearAllWords();stopLoop();resetGameState()});
             card.querySelector('.delete-btn')?.addEventListener('click',e=>{e.stopPropagation();if(appData.profiles.length<=1){alert('至少保留一个角色！');return}if(confirm(`确定删除角色“${p.name}”吗？`)){appData.profiles=appData.profiles.filter(x=>x.id!==p.id);if(appData.currentProfileId===p.id){appData.currentProfileId=appData.profiles[0].id;curProfile=appData.profiles[0]}saveAllProfiles(appData);renderProfiles();RL.textContent=curProfile.name}});
             PL.appendChild(card)});
         AP.disabled=appData.profiles.length>=5;AP.textContent=appData.profiles.length>=5?'角色已满 (5/5)':'➕ 新建角色';
