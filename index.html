@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>打字gogogo · 白底优化</title>
+    <title>打字gogogo · 最终优化版</title>
     <script src="https://unpkg.com/pinyin-pro@3.20.4/dist/index.js"></script>
     <style>
         :root {
@@ -41,11 +41,11 @@
         #historyBtn{top:30%;transform:translateY(-50%)} #progressBtn{top:50%;transform:translateY(-50%);background:#ffa500}
         #pauseOverlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);display:none;justify-content:center;align-items:center;z-index:50;font-size:2.5rem;font-weight:bold;color:white;text-shadow:0 0 25px var(--accent);cursor:pointer}
         #pauseOverlay.visible{display:flex}
-        #gameOverMsg{position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.85);padding:25px 40px;border-radius:20px;text-align:center;font-size:1.3rem;backdrop-filter:blur(10px);border:2px solid var(--accent);display:none;z-index:60;animation:fadeIn 0.4s}
+        #gameOverMsg{position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.9);padding:25px 40px;border-radius:20px;text-align:center;font-size:1.3rem;backdrop-filter:blur(10px);border:2px solid var(--accent);color:white;display:none;z-index:60;animation:fadeIn 0.4s}
         #gameOverMsg.show{display:block} @keyframes fadeIn{from{opacity:0;transform:translate(-50%,-40px)}to{opacity:1;transform:translate(-50%,-50%)}}
         #comboDisplay{position:absolute;top:90px;left:50%;transform:translateX(-50%);font-size:2rem;font-weight:bold;color:#ffd700;text-shadow:0 0 20px #ffaa00,0 0 40px #ff6600;z-index:40;transition:opacity 0.15s;opacity:0;pointer-events:none;white-space:nowrap}
         .combo-active{opacity:1!important}
-        #inputBox{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);padding:10px 20px;font-size:1.1rem;border:2px solid var(--accent);border-radius:20px;background:var(--input-bg);backdrop-filter:blur(10px);color:var(--text-color);text-align:center;outline:none;z-index:30;width:260px;letter-spacing:2px}
+        #inputBox{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);padding:10px 20px;font-size:1.1rem;border:2px solid var(--accent);border-radius:20px;background:var(--input-bg);backdrop-filter:blur(10px);color:var(--text-color);text-align:center;outline:none;z-index:30;width:260px;letter-spacing:2px;transition:border-color 0.3s}
         #inputBox:focus{box-shadow:0 0 20px var(--accent)} #missDisplay{position:absolute;bottom:40px;right:15px;background:rgba(0,0,0,0.5);backdrop-filter:blur(6px);padding:5px 12px;border-radius:12px;font-size:0.9rem;border:1px solid rgba(255,255,255,0.3);z-index:30}
         #mistakePanel,#progressPanel{position:absolute;right:55px;top:8%;width:220px;max-height:68%;background:rgba(20,20,40,0.95);border:2px solid var(--accent);border-radius:15px;padding:10px;z-index:60;overflow-y:auto;display:none;flex-direction:column;gap:8px}
         #progressPanel{border-color:#ffa500} .visible{display:flex!important}
@@ -57,33 +57,16 @@
         @keyframes pulse{0%{text-shadow:0 0 10px var(--accent)}50%{text-shadow:0 0 20px var(--accent)}100%{text-shadow:0 0 10px var(--accent)}}
         .word.exploding{animation:explodeWord 0.4s ease-out forwards!important} @keyframes explodeWord{0%{color:#00ff88;transform:scale(1.5);opacity:1}100%{opacity:0}}
         .score-popup{position:absolute;font-size:2.2rem;font-weight:bold;color:#ffd700;z-index:80;animation:floatUp 0.8s ease-out forwards} @keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(0.5)}100%{opacity:0;transform:translateY(-90px) scale(1)}}
-
-        /* 白底模式专用样式 */
-        body.light-mode .word,
-        body.light-mode .word.active,
-        body.light-mode .word .pinyin { text-shadow: none !important; }
-        body.light-mode .word { color: #cc0000 !important; }
-        body.light-mode .word.active { color: #cc0000 !important; }
+        /* 白底模式 */
+        body.light-mode .word, body.light-mode .word.active, body.light-mode .word .pinyin { text-shadow: none !important; }
+        body.light-mode .word { color: #cc0000 !important; } body.light-mode .word.active { color: #cc0000 !important; }
         body.light-mode .word .pinyin { color: rgba(0,0,0,0.55) !important; }
-        body.light-mode .setting-group select,
-        body.light-mode #difficultyGroup select,
-        body.light-mode #modeSelect,
-        body.light-mode #themeSelect,
-        body.light-mode #colorSelect {
-            background: #333 !important;
-            color: white !important;
-        }
-        body.light-mode .setting-group,
-        body.light-mode #speedPanel,
-        body.light-mode #controlBtns .btn,
-        body.light-mode #scoreBoard {
-            font-size: 2.1rem !important;
-        }
-        body.light-mode .setting-group select { font-size: 2.1rem !important; }
-        body.light-mode #speedSlider { width: 140px; }
-        body.light-mode #speedValue { font-size: 2.1rem !important; }
-        body.light-mode .btn { font-size: 2.1rem !important; padding: 8px 20px; }
-        body.light-mode #inputBox { font-size: 2rem; width: 400px; }
+        body.light-mode .setting-group select { background: #333 !important; color: white !important; }
+        body.light-mode #title { color: #cc0000 !important; }
+        body.light-mode #comboDisplay { text-shadow: none !important; }
+        /* 结束弹窗按钮强化 */
+        #restartBtn { background: #ff6b6b !important; color: white !important; font-weight: bold; padding: 8px 20px; font-size: 1rem; }
+        .ui-hidden { visibility: hidden !important; pointer-events: none; }
     </style>
 </head>
 <body>
@@ -92,21 +75,21 @@
     <div id="topBar">
         <h1 id="title">⌨️ 打字gogogo ✎</h1>
         <div id="scoreBoard"><span>🌟 得分 <span id="scoreDisplay">0</span></span><span>角色：<span id="roleLabel">---</span></span></div>
-        <div class="setting-group"><label>🎯 模式</label><select id="modeSelect"><option value="normal" selected>普通</option><option value="endless">无尽</option></select></div>
+        <div class="setting-group" id="modeGroup"><label>🎯 模式</label><select id="modeSelect"><option value="normal" selected>普通</option><option value="endless">无尽</option></select></div>
         <div class="setting-group" id="difficultyGroup"><label>📊 难度</label><select id="difficultySelect"><option value="easy">初级</option><option value="medium" selected>中级</option><option value="hard">高级</option></select></div>
-        <div class="setting-group"><label>📚 词库</label><select id="themeSelect"><option value="standard" selected>标准</option><option value="internet">热梗</option><option value="idiom">成语</option><option value="food">美食</option><option value="animal">动物</option></select></div>
-        <div class="setting-group"><label>🎨 配色</label><select id="colorSelect"><option value="green">暗夜松绿</option><option value="coffee">暖暮咖啡</option><option value="ocean">深海蓝灰</option><option value="purple">淡雅紫灰</option><option value="light">白底黑字</option></select></div>
+        <div class="setting-group" id="themeGroup"><label>📚 词库</label><select id="themeSelect"><option value="standard" selected>标准</option><option value="internet">热梗</option><option value="idiom">成语</option><option value="food">美食</option><option value="animal">动物</option></select></div>
+        <div class="setting-group" id="colorGroup"><label>🎨 配色</label><select id="colorSelect"><option value="green">暗夜松绿</option><option value="coffee">暖暮咖啡</option><option value="ocean">深海蓝灰</option><option value="purple">淡雅紫灰</option><option value="light">白底黑字</option></select></div>
         <div id="speedPanel"><span>🐢</span><input type="range" id="speedSlider" min="1" max="5" value="3" step="1"><span>🐇</span><span id="speedValue">3档</span></div>
         <div id="controlBtns"><button class="btn" id="pauseBtn">⏯️ 暂停</button><button class="btn" id="newGameBtn">🔄 新游戏</button></div>
     </div>
     <div id="profileModal"><div class="profile-panel"><h3 style="margin:0;text-align:center">🎭 角色管理</h3><div class="profile-list" id="profileList"></div><button class="btn" id="addProfileBtn" style="align-self:center">➕ 新建角色</button><input type="text" id="newProfileName" placeholder="角色名(2-8字)" maxlength="8" style="display:none;background:rgba(0,0,0,0.6);color:white;border:1px solid rgba(255,255,255,0.3);padding:6px 10px;border-radius:8px;width:100%"><div style="display:flex;gap:10px;justify-content:center"><button class="btn" id="confirmAddBtn" style="display:none">确认</button><button class="btn" id="cancelAddBtn" style="display:none">取消</button></div><button class="btn" id="closeProfileBtn" style="margin-top:5px">关闭</button></div></div>
     <div id="comboDisplay">COMBO x1</div>
-    <input type="text" id="inputBox" placeholder="在此输入汉字..." autocomplete="off">
+    <input type="text" id="inputBox" placeholder="点击开始游戏后输入..." autocomplete="off">
     <div id="missDisplay">💔 剩余机会 <span id="missCount">3</span></div>
     <button id="historyBtn">📖 错词</button><button id="progressBtn">📈 进步</button>
     <div id="mistakePanel"></div><div id="progressPanel"><canvas id="progressCanvas" width="180" height="120"></canvas></div>
     <div id="pauseOverlay">⏸️ 暂停中</div>
-    <div id="gameOverMsg"><div>💥 游戏结束</div><div style="font-size:1.1rem;margin-top:10px">最终得分：<span id="finalScore">0</span></div><button class="btn" id="restartBtn" style="margin-top:15px">🔄 再来一局</button></div>
+    <div id="gameOverMsg"><div>💥 游戏结束</div><div style="font-size:1.1rem;margin-top:10px">最终得分：<span id="finalScore">0</span></div><div style="font-size:1rem;margin-top:5px" id="speedStat"></div><button class="btn" id="restartBtn" style="margin-top:15px">🔄 再来一局</button></div>
 </div>
 <script>
 (function(){
@@ -125,7 +108,8 @@
           TS=document.getElementById('themeSelect'),CS=document.getElementById('colorSelect'),TE=document.getElementById('title'),
           RL=document.getElementById('roleLabel'),PM=document.getElementById('profileModal'),PL=document.getElementById('profileList'),
           AP=document.getElementById('addProfileBtn'),NP=document.getElementById('newProfileName'),CA=document.getElementById('confirmAddBtn'),
-          CL=document.getElementById('cancelAddBtn'),CP=document.getElementById('closeProfileBtn');
+          CL=document.getElementById('cancelAddBtn'),CP=document.getElementById('closeProfileBtn'),
+          SS=document.getElementById('speedStat'),SP=document.getElementById('speedPanel');
     const DW=1280,DH=800;
     const colorSchemes={
         green:{bg:'#1a2421',cbg:'radial-gradient(circle at center, #162e22, #0b4229)',a:'#2ecc71',w:'#f1f1f1',wa:'#2ecc71',uibg:'rgba(0,0,0,0.3)',bbg:'rgba(255,255,255,0.15)',bh:'rgba(46,204,113,0.4)',t:'white',ibg:'rgba(255,255,255,0.12)',py:'rgba(200,255,220,0.7)'},
@@ -147,7 +131,7 @@
     const savedColor=localStorage.getItem('typingColorScheme')||'green';CS.value=savedColor;applyColor(savedColor);
     CS.addEventListener('change',e=>applyColor(e.target.value));
 
-    // 角色数据
+    // 角色
     const SK='typingGameProfiles';
     function loadAllProfiles(){
         const raw=localStorage.getItem(SK);if(raw)return JSON.parse(raw);
@@ -169,23 +153,8 @@
         const bw=14,gap=(180-days.length*bw)/(days.length+1);ctx.fillStyle='#ffa500';ctx.font='9px sans-serif';
         days.forEach((d,i)=>{const x=gap+i*(bw+gap),best=Math.max(...p.progressData[d].scores),h=(best/maxS)*80;ctx.fillRect(x,90-h,bw,h);ctx.fillStyle='#fff';ctx.fillText(d.slice(5),x,105);ctx.fillStyle='#ffa500'})
     }
-    function renderMistakePanel(){
-        MP.innerHTML='';const p=getCurProfile();const entries=Object.entries(p.mistakeHistory).sort((a,b)=>b[1]-a[1]);
-        if(!entries.length){MP.innerHTML='<div style="color:#aaa;text-align:center">暂无错词</div>';return}
-        for(const [w,c] of entries){const div=document.createElement('div');div.className='mistake-item';div.innerHTML=`<span class="mistake-word">${w}</span><span class="mistake-badge">${c}</span><span style="font-size:0.7rem;color:#aaa">${getPinyin(w)}</span>`;MP.appendChild(div)}
-    }
-    function renderProfiles(){
-        PL.innerHTML='';appData.profiles.forEach(p=>{
-            const card=document.createElement('div');card.className='profile-card'+(p.id===appData.currentProfileId?' active':'');
-            const best=Math.max(...Object.values(p.progressData).flatMap(d=>d.scores),0);
-            const mc=Object.values(p.mistakeHistory).reduce((a,b)=>a+b,0);
-            card.innerHTML=`<div><b>${p.name}</b><br><small>🏆 ${best} ❌ ${mc}</small></div><div>${p.id!==appData.currentProfileId?'<button class="switch-btn">使用</button>':'<span style="color:var(--accent)">✔ 使用中</span>'}<button class="delete-btn">🗑️</button></div>`;
-            card.addEventListener('click',e=>{if(e.target.classList.contains('delete-btn')||e.target.classList.contains('switch-btn'))return;if(p.id!==appData.currentProfileId){if(gs&&!igo){if(!confirm('切换角色将结束当前游戏，确定吗？'))return;endGame(false)}updateCurProfileId(p.id);renderProfiles();RL.textContent=curProfile.name;clearAllWords();stopLoop();resetGameState()}});
-            card.querySelector('.switch-btn')?.addEventListener('click',e=>{e.stopPropagation();if(gs&&!igo){if(!confirm('切换角色将结束当前游戏，确定吗？'))return;endGame(false)}updateCurProfileId(p.id);renderProfiles();RL.textContent=curProfile.name;clearAllWords();stopLoop();resetGameState()});
-            card.querySelector('.delete-btn')?.addEventListener('click',e=>{e.stopPropagation();if(appData.profiles.length<=1){alert('至少保留一个角色！');return}if(confirm(`确定删除角色“${p.name}”吗？`)){appData.profiles=appData.profiles.filter(x=>x.id!==p.id);if(appData.currentProfileId===p.id){appData.currentProfileId=appData.profiles[0].id;curProfile=appData.profiles[0]}saveAllProfiles(appData);renderProfiles();RL.textContent=curProfile.name}});
-            PL.appendChild(card)});
-        AP.disabled=appData.profiles.length>=5;AP.textContent=appData.profiles.length>=5?'角色已满 (5/5)':'➕ 新建角色';
-    }
+    function renderMistakePanel(){MP.innerHTML='';const p=getCurProfile();const entries=Object.entries(p.mistakeHistory).sort((a,b)=>b[1]-a[1]);if(!entries.length){MP.innerHTML='<div style="color:#aaa;text-align:center">暂无错词</div>';return}for(const [w,c] of entries){const div=document.createElement('div');div.className='mistake-item';div.innerHTML=`<span class="mistake-word">${w}</span><span class="mistake-badge">${c}</span><span style="font-size:0.7rem;color:#aaa">${getPinyin(w)}</span>`;MP.appendChild(div)}}
+    function renderProfiles(){PL.innerHTML='';appData.profiles.forEach(p=>{const card=document.createElement('div');card.className='profile-card'+(p.id===appData.currentProfileId?' active':'');const best=Math.max(...Object.values(p.progressData).flatMap(d=>d.scores),0);const mc=Object.values(p.mistakeHistory).reduce((a,b)=>a+b,0);card.innerHTML=`<div><b>${p.name}</b><br><small>🏆 ${best} ❌ ${mc}</small></div><div>${p.id!==appData.currentProfileId?'<button class="switch-btn">使用</button>':'<span style="color:var(--accent)">✔ 使用中</span>'}<button class="delete-btn">🗑️</button></div>`;card.addEventListener('click',e=>{if(e.target.classList.contains('delete-btn')||e.target.classList.contains('switch-btn'))return;if(p.id!==appData.currentProfileId){if(gameStarted&&!isGameOver){if(!confirm('切换角色将结束当前游戏，确定吗？'))return;endGame(false)}updateCurProfileId(p.id);renderProfiles();RL.textContent=curProfile.name;clearAllWords();stopLoop();resetGameState()}});card.querySelector('.switch-btn')?.addEventListener('click',e=>{e.stopPropagation();if(gameStarted&&!isGameOver){if(!confirm('切换角色将结束当前游戏，确定吗？'))return;endGame(false)}updateCurProfileId(p.id);renderProfiles();RL.textContent=curProfile.name;clearAllWords();stopLoop();resetGameState()});card.querySelector('.delete-btn')?.addEventListener('click',e=>{e.stopPropagation();if(appData.profiles.length<=1){alert('至少保留一个角色！');return}if(confirm(`确定删除角色“${p.name}”吗？`)){appData.profiles=appData.profiles.filter(x=>x.id!==p.id);if(appData.currentProfileId===p.id){appData.currentProfileId=appData.profiles[0].id;curProfile=appData.profiles[0]}saveAllProfiles(appData);renderProfiles();RL.textContent=curProfile.name}});PL.appendChild(card)});AP.disabled=appData.profiles.length>=5;AP.textContent=appData.profiles.length>=5?'角色已满 (5/5)':'➕ 新建角色';}
     RL.textContent=curProfile.name;
     function showProfileModal(){renderProfiles();PM.classList.add('show')}
     function hideProfileModal(){PM.classList.remove('show');NP.style.display='none';CA.style.display='none';CL.style.display='none'}
@@ -196,116 +165,67 @@
     TE.addEventListener('click',e=>{e.stopPropagation();showProfileModal()});
 
     // 游戏状态
-    let score=0,activeWords=[],animId=null,isPaused=false,isGameOver=false,igo=false,gs=false;
+    let score=0,activeWords=[],animId=null,isPaused=false,isGameOver=false,gameStarted=false;
     let speedLevel=3,missCount=0,maxMisses=3,remainingPhrases=[],combo=0;
     let curDiff='medium',curTheme='standard',curMode='normal';
     let endlessFlags={2:false,3:false,4:false,5:false};
+    let wordCount=0,startTime=0;
 
-    // 词库
     const sw="你好,世界,键盘,打字,游戏,速度,准确,练习,平板,电脑,网络,数字,科技,未来,发展,创新,智慧,生活,学习,工作,效率,提升,能力,挑战,成绩,记录,时间,空间,宇宙,星球,银河,太阳,月亮,星星,海洋,山川,河流,森林,动物,植物,音乐,艺术,文化,历史,经济,社会,健康,运动,美食,旅行,摄影,设计,程序,代码,系统,软件,硬件,数据,算法,人工智能,机器学习,深度学习,自然语言,计算机,互联网,数据库,服务器,客户端,应用程序,界面,用户体验,交互,响应,稳定,安全,隐私,版权,开放,共享,合作,团队,管理,领导,沟通,表达,写作,阅读,思考,逻辑,分析,判断,创造,想象,梦想,目标,行动,坚持,努力,成功".split(',');
     const iw="绝绝子,内卷,躺平,破防,emo,yyds,nsdd,u1s1,dddd,爷青回,集美,芭比Q,栓Q,炫饭,显眼包,泰裤辣,家人们,上链接,摆烂,摸鱼,凡尔赛,社恐,社牛,吸猫,撸狗,干饭人,打工人,工具人,尾款人,气氛组,破圈,出圈,后浪,前浪,吃瓜,吃鸡,开黑,带飞,坑货,下饭,弹幕,宝藏,安利,排雷,种草,拔草,真香,打脸,上头,下头,蹭热度,热搜,塌房,翻车,糊了,名场面,回忆杀,爷童回,DNA动了,我酸了,我没了,我哭了,我好了,我又行了,裂开,人麻了,离谱,离大谱,绷不住了,蚌埠住了,雷人,震惊,辣眼睛,洗眼睛,醉了,也是醉了,佛了,我佛了,奥利给,skr,单推,双厨狂喜,迫害,整活,绝活,手艺活,鬼畜,魔性,上头,洗脑,循环,入坑,退坑,回坑,云玩家,键政,杠精,喷子,黑粉,反串黑".split(',');
     const idw="一心一意,三心二意,四面八方,五颜六色,七上八下,九牛一毛,十全十美,百发百中,千军万马,万紫千红,画蛇添足,守株待兔,亡羊补牢,狐假虎威,叶公好龙,掩耳盗铃,刻舟求剑,拔苗助长,坐井观天,井底之蛙,杞人忧天,愚公移山,精卫填海,夸父追日,女娲补天,开天辟地,大禹治水,后羿射日,牛郎织女,嫦娥奔月,八仙过海,各显神通,对牛弹琴,缘木求鱼,杯弓蛇影,画龙点睛,虎头蛇尾,龙飞凤舞,鸡飞狗跳,狼吞虎咽,龙争虎斗,生龙活虎,卧虎藏龙,调虎离山,骑虎难下,马到成功,指鹿为马,快马加鞭,老马识途,悬崖勒马,塞翁失马,闻鸡起舞,鹤立鸡群,鸡犬升天,鸡犬不宁,鼠目寸光,胆小如鼠,抱头鼠窜,牛鬼蛇神,九牛一毛,虎背熊腰,兔死狐悲,龙马精神,蛇鼠一窝,打草惊蛇,马不停蹄,羊肠小道,亡羊补牢,猴年马月,鸡毛蒜皮,犬牙交错,狗急跳墙,狼心狗肺,狼狈为奸,猪狗不如,鸟语花香,一箭双雕,双管齐下,两全其美,三顾茅庐,四平八稳,五体投地,六神无主,七窍生烟,八仙过海,九死一生,十面埋伏,百里挑一,千载难逢,万众一心,不计其数,成千上万,千变万化,千山万水,千言万语,千辛万苦,千锤百炼,千丝万缕,千真万确,千钧一发,千篇一律,千奇百怪,千里迢迢".split(',');
     const fw="火锅,麻辣烫,串串香,关东煮,寿喜烧,部队锅,涮羊肉,烤鱼,烤串,烧烤,烤肉,铁板烧,牛排,炸鸡,炸串,炸酱面,拉面,刀削面,手擀面,阳春面,热干面,担担面,重庆小面,螺蛳粉,酸辣粉,过桥米线,桂林米粉,肠粉,河粉,煲仔饭,盖浇饭,蛋炒饭,扬州炒饭,卤肉饭,台湾卤肉饭,黄焖鸡米饭,饺子,馄饨,抄手,云吞,烧卖,包子,小笼包,灌汤包,生煎,馒头,花卷,油条,豆浆,豆腐脑,豆花,煎饼,手抓饼,葱油饼,鸡蛋灌饼,煎饼果子,肉夹馍,锅盔,烤馕,羊肉串,手抓饭,大盘鸡,椒麻鸡,辣子鸡,口水鸡,白切鸡,文昌鸡,叫花鸡,汽锅鸡,烤鸭,盐水鸭,酱鸭,卤鸭,鸭血粉丝汤,老鸭汤,鸭脖,鸭翅,鸭舌,东坡肉,红烧肉,梅菜扣肉,回锅肉,锅包肉,糖醋里脊,咕咾肉,荔枝肉,水煮肉片,水煮鱼,酸菜鱼,麻辣鱼,清蒸鱼,红烧鱼,松鼠桂鱼,西湖醋鱼,剁椒鱼头,鱼香肉丝,宫保鸡丁,夫妻肺片,麻婆豆腐,虎皮青椒,地三鲜,溜肉段,京酱肉丝,木须肉,四喜丸子,糖醋排骨".split(',');
     const aw="猫咪,小猫,大猫,老虎,狮子,猎豹,雪豹,云豹,金猫,薮猫,狞猫,豹猫,虎猫,兔狲,藏獒,哈士奇,金毛,拉布拉多,泰迪,比熊,博美,柯基,柴犬,秋田,中华田园犬,边牧,德牧,罗威纳,杜宾,萨摩耶,阿拉斯加,松狮,巴哥,法斗,英斗,吉娃娃,约克夏,马尔济斯,雪纳瑞,贵宾,比格,小鹿犬,京巴,西施犬,猎狐梗,万能梗,灵缇,大丹犬,圣伯纳,大白熊,高加索,中亚牧羊犬,比特,土佐,菲勒,卡斯罗,加纳利,阿根廷杜高,美国恶霸,斯塔福,牛头梗,大麦町,斑点狗,贵妇犬,卷毛比熊,贝灵顿梗,凯利蓝梗,爱尔兰梗,苏格兰梗,西高地白梗,杰克梗,金毛寻回犬,拉布拉多寻回犬,平毛寻回犬,卷毛寻回犬,爱尔兰水猎犬,葡萄牙水犬,西班牙水犬,英国可卡犬,美国可卡犬,英国史宾格犬,威尔士史宾格犬,爱尔兰雪达犬,戈登雪达犬,英国雪达犬,指示犬,德国短毛指示犬,德国刚毛指示犬,威玛猎犬,匈牙利维兹拉犬,博美犬,哈士奇,萨摩耶,阿拉斯加雪橇犬,西伯利亚雪橇犬,格陵兰犬,加拿大爱斯基摩犬,挪威猎糜犬,瑞典猎糜犬,芬兰猎犬".split(',');
-    function getWordPool(){
-        if(curTheme==='internet')return iw;
-        if(curTheme==='idiom')return idw;
-        if(curTheme==='food')return fw;
-        if(curTheme==='animal')return aw;
-        return sw;
-    }
+    function getWordPool(){if(curTheme==='internet')return iw;if(curTheme==='idiom')return idw;if(curTheme==='food')return fw;if(curTheme==='animal')return aw;return sw;}
     function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
     function getPinyin(t){if(typeof pinyinPro!=='undefined'&&pinyinPro.pinyin)return pinyinPro.pinyin(t,{toneType:'none'}).replace(/\s+/g,'');return''}
-    function upScore(){SD.textContent=score}
-    function upMiss(){const l=maxMisses-missCount;MC.textContent=l;MC.style.color=l<=1?'#ff6b6b':'#fff'}
+    function upScore(){SD.textContent=score} function upMiss(){const l=maxMisses-missCount;MC.textContent=l;MC.style.color=l<=1?'#ff6b6b':'#fff'}
     function upSpeed(){SL.value=speedLevel;SV.textContent=['1档(慢)','2档','3档','4档','5档(快)'][speedLevel-1]}
     function upCombo(){if(combo>=2){CD.textContent=`🔥 COMBO x${combo}`;CD.classList.add('combo-active')}else{CD.classList.remove('combo-active')}}
     function resetCombo(){combo=0;upCombo()}
     function getSpeed(){return 0.2+0.7*(speedLevel-1)}
-    function createWordEl(text){
-        const el=document.createElement('div');el.className='word';
-        el.innerHTML=`<span>${text}</span><span class="pinyin">${getPinyin(text)}</span>`;
-        el.style.left=Math.random()*(DW-200)+'px';el.style.top='-60px';G.appendChild(el);return el;
-    }
-    function spawnWord(){
-        if(isPaused||isGameOver||!gs)return;
-        if(!remainingPhrases.length)remainingPhrases=shuffle(getWordPool());
-        const text=remainingPhrases.pop(),el=createWordEl(text);
-        activeWords.push({element:el,x:parseFloat(el.style.left),y:-60,speed:getSpeed()});
-        updateActive();
-    }
-    function removeWordAt(i){
-        const w=activeWords[i];if(!w)return;
-        w.element.classList.add('exploding');
-        w.element.addEventListener('animationend',function h(){w.element.removeEventListener('animationend',h);if(w.element.parentNode)G.removeChild(w.element)});
-        const pop=document.createElement('div');pop.className='score-popup';pop.textContent=`+${10+(combo>=2?combo*2:0)}`;
-        const r=w.element.getBoundingClientRect(),cr=G.getBoundingClientRect();
-        pop.style.left=(r.left-cr.left)+'px';pop.style.top=(r.top-cr.top)+'px';G.appendChild(pop);
-        pop.addEventListener('animationend',()=>pop.remove());
-        activeWords.splice(i,1);
-        playTone(combo>=2?600+combo*50:500,'sine',0.15,0.3);
-    }
+    function createWordEl(text){const el=document.createElement('div');el.className='word';el.innerHTML=`<span>${text}</span><span class="pinyin">${getPinyin(text)}</span>`;el.style.left=Math.random()*(DW-200)+'px';el.style.top='-60px';G.appendChild(el);return el;}
+    function spawnWord(){if(isPaused||isGameOver||!gameStarted)return;if(!remainingPhrases.length)remainingPhrases=shuffle(getWordPool());const text=remainingPhrases.pop(),el=createWordEl(text);activeWords.push({element:el,x:parseFloat(el.style.left),y:-60,speed:getSpeed()});updateActive();}
+    function removeWordAt(i){const w=activeWords[i];if(!w)return;w.element.classList.add('exploding');w.element.addEventListener('animationend',function h(){w.element.removeEventListener('animationend',h);if(w.element.parentNode)G.removeChild(w.element)});const pop=document.createElement('div');pop.className='score-popup';pop.textContent=`+${10+(combo>=2?combo*2:0)}`;const r=w.element.getBoundingClientRect(),cr=G.getBoundingClientRect();pop.style.left=(r.left-cr.left)+'px';pop.style.top=(r.top-cr.top)+'px';G.appendChild(pop);pop.addEventListener('animationend',()=>pop.remove());activeWords.splice(i,1);playTone(combo>=2?600+combo*50:500,'sine',0.15,0.3);}
     function clearAllWords(){activeWords.forEach(w=>{if(w.element.parentNode)w.element.remove()});activeWords=[]}
     function updateActive(){activeWords.forEach((w,i)=>w.element.classList.toggle('active',i===0&&activeWords.length>0))}
-    function checkAndSpawn(){if(!isPaused&&!isGameOver&&gs&&!activeWords.length)spawnWord()}
+    function checkAndSpawn(){if(!isPaused&&!isGameOver&&gameStarted&&!activeWords.length)spawnWord()}
     function stopLoop(){if(animId){cancelAnimationFrame(animId);animId=null}}
-    function gameLoop(){
-        if(isPaused||isGameOver||!gs){animId=requestAnimationFrame(gameLoop);return}
-        for(let i=activeWords.length-1;i>=0;i--){
-            const w=activeWords[i];w.y+=w.speed;w.element.style.top=w.y+'px';
-            if(w.y>DH){missCount++;upMiss();w.element.remove();activeWords.splice(i,1);resetCombo();playTone(200,'triangle',0.2,0.2);if(missCount>=maxMisses){endGame();return}updateActive()}
-        }
-        checkAndSpawn();animId=requestAnimationFrame(gameLoop);
-    }
-    function resetGameState(){stopLoop();clearAllWords();I.value='';score=0;missCount=0;combo=0;upScore();upMiss();upCombo();isGameOver=false;isPaused=false;PO.classList.remove('visible');GO.classList.remove('show');I.disabled=false}
-    function applyModeSettings(){
-        if(curMode==='endless'){speedLevel=1;maxMisses=5;missCount=0;endlessFlags={2:false,3:false,4:false,5:false};DG.style.display='none';SL.disabled=true;DS.disabled=true;MS.disabled=true}
-        else{DG.style.display='flex';SL.disabled=false;DS.disabled=false;MS.disabled=false}
-        upSpeed();upMiss();
-    }
+    function gameLoop(){if(isPaused||isGameOver||!gameStarted){animId=requestAnimationFrame(gameLoop);return}for(let i=activeWords.length-1;i>=0;i--){const w=activeWords[i];w.y+=w.speed;w.element.style.top=w.y+'px';if(w.y>DH){missCount++;upMiss();w.element.remove();activeWords.splice(i,1);resetCombo();playTone(200,'triangle',0.2,0.2);if(missCount>=maxMisses){endGame();return}updateActive()}}checkAndSpawn();animId=requestAnimationFrame(gameLoop);}
+    function resetGameState(){stopLoop();clearAllWords();I.value='';score=0;missCount=0;combo=0;upScore();upMiss();upCombo();isGameOver=false;isPaused=false;PO.classList.remove('visible');GO.classList.remove('show');I.disabled=false;wordCount=0;startTime=Date.now();SS.textContent='';}
+    function applyModeSettings(){if(curMode==='endless'){speedLevel=1;maxMisses=5;missCount=0;endlessFlags={2:false,3:false,4:false,5:false};DG.style.display='none';SL.disabled=true;DS.disabled=true;MS.disabled=true}else{DG.style.display='flex';SL.disabled=false;DS.disabled=false;MS.disabled=false}upSpeed();upMiss();}
+    function toggleGameUI(hide){const groups=[TE,document.getElementById('modeGroup'),DG,document.getElementById('themeGroup'),document.getElementById('colorGroup'),document.getElementById('controlBtns')];if(curMode==='endless')groups.push(SP);if(hide){if(curMode==='normal')SP.classList.remove('ui-hidden');groups.forEach(el=>el.classList.add('ui-hidden'));}else{groups.forEach(el=>el.classList.remove('ui-hidden'));}}
     function resetGame(){
         if(!curProfile){alert('请先创建或选择一个角色！');showProfileModal();return}
-        I.disabled=false;resetGameState();gs=true;curMode=MS.value;curTheme=TS.value;
+        I.disabled=false;resetGameState();gameStarted=true;curMode=MS.value;curTheme=TS.value;
         if(curMode==='normal'){curDiff=DS.value;if(curDiff==='easy'){speedLevel=2;maxMisses=5}else if(curDiff==='medium'){speedLevel=3;maxMisses=3}else{speedLevel=4;maxMisses=2}}
-        applyModeSettings();remainingPhrases=shuffle(getWordPool());upMiss();spawnWord();animId=requestAnimationFrame(gameLoop);I.focus();
+        applyModeSettings();remainingPhrases=shuffle(getWordPool());upMiss();spawnWord();
+        toggleGameUI(true);
+        animId=requestAnimationFrame(gameLoop);I.focus();
     }
-    function startNewGame(){if(!appData.profiles.length){alert('请先创建一个角色！');showProfileModal();return}I.disabled=false;SO.classList.add('hidden');resetGame()}
-    function endGame(save=true){if(isGameOver)return;isGameOver=true;stopLoop();clearAllWords();FS.textContent=score;GO.classList.add('show');I.blur();gs=false;I.disabled=true;if(save)saveDailyProgress(score,0);if(curMode==='endless')MS.disabled=false}
-    function togglePause(){if(isGameOver||!gs)return;isPaused=!isPaused;if(isPaused){PO.classList.add('visible');I.blur();I.disabled=true}else{PO.classList.remove('visible');I.disabled=false;checkAndSpawn();I.focus()}updateActive()}
-    function checkEndlessUp(){
-        if(curMode!=='endless')return;
-        if(combo>=10&&!endlessFlags[2]&&speedLevel<2){speedLevel=2;endlessFlags[2]=true;maxMisses++;missCount=Math.min(missCount,maxMisses)}
-        if(combo>=20&&speedLevel===2&&!endlessFlags[3]){speedLevel=3;endlessFlags[3]=true;maxMisses++}
-        if(combo>=10&&speedLevel===3&&!endlessFlags[4]){speedLevel=4;endlessFlags[4]=true;maxMisses++}
-        if(combo>=10&&speedLevel===4&&!endlessFlags[5]){speedLevel=5;endlessFlags[5]=true;maxMisses++}
-        upSpeed();upMiss();
-    }
-    I.addEventListener('input',()=>{
-        if(isPaused||isGameOver||!gs||!activeWords.length){if(I.value!=='')I.value='';return}
-        const cur=activeWords[0],target=cur.element.querySelector('span').textContent,val=I.value;
-        if(target.startsWith(val)){
-            if(val===target){combo++;upCombo();score+=10+(combo>=2?combo*2:0);upScore();removeWordAt(0);I.value='';updateActive();checkEndlessUp();checkAndSpawn()}
-        }else{recordMistake(target);I.value='';resetCombo();playTone(200,'triangle',0.15,0.2)}
-    });
+    function startNewGame(){if(!appData.profiles.length){alert('请先创建一个角色！');showProfileModal();return}I.disabled=false;SO.classList.add('hidden');resetGame();}
+    function endGame(save=true){if(isGameOver)return;isGameOver=true;stopLoop();clearAllWords();FS.textContent=score;const elapsed=(Date.now()-startTime)/60000;const speed=elapsed>0?Math.round(wordCount/elapsed):0;SS.textContent=`打字速度：${speed} 字/分钟`;GO.classList.add('show');I.blur();gameStarted=false;I.disabled=true;if(save)saveDailyProgress(score,0);if(curMode==='endless')MS.disabled=false;toggleGameUI(false);}
+    function togglePause(){if(isGameOver||!gameStarted)return;isPaused=!isPaused;if(isPaused){PO.classList.add('visible');I.blur();I.disabled=true;toggleGameUI(false);}else{PO.classList.remove('visible');I.disabled=false;checkAndSpawn();I.focus();toggleGameUI(true);}updateActive();}
+    function checkEndlessUp(){if(curMode!=='endless')return;if(combo>=10&&!endlessFlags[2]&&speedLevel<2){speedLevel=2;endlessFlags[2]=true;maxMisses++;missCount=Math.min(missCount,maxMisses)}if(combo>=20&&speedLevel===2&&!endlessFlags[3]){speedLevel=3;endlessFlags[3]=true;maxMisses++}if(combo>=10&&speedLevel===3&&!endlessFlags[4]){speedLevel=4;endlessFlags[4]=true;maxMisses++}if(combo>=10&&speedLevel===4&&!endlessFlags[5]){speedLevel=5;endlessFlags[5]=true;maxMisses++}upSpeed();upMiss();}
+    I.addEventListener('input',()=>{if(isPaused||isGameOver||!gameStarted||!activeWords.length){if(I.value!=='')I.value='';return}const cur=activeWords[0],target=cur.element.querySelector('span').textContent,val=I.value;if(target.startsWith(val)){if(val===target){combo++;upCombo();score+=10+(combo>=2?combo*2:0);upScore();wordCount++;removeWordAt(0);I.value='';updateActive();checkEndlessUp();checkAndSpawn();}}else{recordMistake(target);I.value='';resetCombo();playTone(200,'triangle',0.15,0.2)}});
     function scaleGame(){const wx=window.innerWidth,wy=window.innerHeight;const sc=Math.min(wx/DW,wy/DH);G.style.transform=`translate(-50%,-50%) scale(${sc})`;G.style.position='absolute';G.style.left='50%';G.style.top='50%'}
     window.addEventListener('resize',scaleGame);window.addEventListener('load',scaleGame);scaleGame();
     SB.addEventListener('click',()=>{initAudio();startNewGame()});
     PB.addEventListener('click',e=>{e.stopPropagation();togglePause()});
     NB.addEventListener('click',e=>{e.stopPropagation();resetGame()});
     RB.addEventListener('click',e=>{e.stopPropagation();resetGame()});
-    SL.addEventListener('input',e=>{if(curMode==='endless')return;speedLevel=parseInt(e.target.value);upSpeed()});
-    MS.addEventListener('change',e=>{if(gs)return;curMode=e.target.value;if(curMode==='endless')DG.style.display='none';else DG.style.display='flex'});
-    DS.addEventListener('change',e=>{curDiff=e.target.value});
-    TS.addEventListener('change',e=>{curTheme=e.target.value});
-    G.addEventListener('click',e=>{if((e.target===G||e.target===PO)&&!isPaused&&!isGameOver&&gs)I.focus()});
-    document.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();if(!isGameOver&&gs)togglePause()}if(e.key==='Enter'&&isGameOver&&GO.classList.contains('show')){e.preventDefault();RB.click()}});
+    SL.addEventListener('input',e=>{if(curMode==='endless')return;speedLevel=parseInt(e.target.value);upSpeed();});
+    MS.addEventListener('change',e=>{if(gameStarted)return;curMode=e.target.value;if(curMode==='endless')DG.style.display='none';else DG.style.display='flex'});
+    DS.addEventListener('change',e=>{curDiff=e.target.value});TS.addEventListener('change',e=>{curTheme=e.target.value});
+    G.addEventListener('click',e=>{if((e.target===G||e.target===PO)&&!isPaused&&!isGameOver&&gameStarted)I.focus()});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();if(!isGameOver&&gameStarted)togglePause()}if(e.key==='Enter'&&isGameOver&&GO.classList.contains('show')){e.preventDefault();RB.click()}});
     PO.addEventListener('click',()=>{if(isPaused&&!isGameOver)togglePause()});
     HB.addEventListener('click',e=>{e.stopPropagation();MP.classList.toggle('visible');if(MP.classList.contains('visible'))renderMistakePanel()});
     PB2.addEventListener('click',e=>{e.stopPropagation();PP.classList.toggle('visible');if(PP.classList.contains('visible'))drawProgressChart()});
     document.addEventListener('click',e=>{if(!MP.contains(e.target)&&e.target!==HB)MP.classList.remove('visible');if(!PP.contains(e.target)&&e.target!==PB2)PP.classList.remove('visible');if(!PM.contains(e.target)&&e.target!==TE)hideProfileModal()});
     PM.addEventListener('click',e=>{e.stopPropagation()});
     if('serviceWorker' in navigator){navigator.serviceWorker.register("data:application/javascript,"+encodeURIComponent("self.addEventListener('fetch',e=>{})"))}
-    (function init(){speedLevel=3;maxMisses=3;upSpeed();upMiss();gs=false;SO.classList.remove('hidden');I.disabled=true;RL.textContent=curProfile.name;if(!appData.profiles.length){const dp={id:genId(),name:'打字新手',createdAt:new Date().toISOString(),mistakeHistory:{},progressData:{}};appData.profiles.push(dp);appData.currentProfileId=dp.id;curProfile=dp;saveAllProfiles(appData);RL.textContent=dp.name}})();
+    (function init(){speedLevel=3;maxMisses=3;upSpeed();upMiss();gameStarted=false;SO.classList.remove('hidden');I.disabled=true;RL.textContent=curProfile.name;if(!appData.profiles.length){const dp={id:genId(),name:'打字新手',createdAt:new Date().toISOString(),mistakeHistory:{},progressData:{}};appData.profiles.push(dp);appData.currentProfileId=dp.id;curProfile=dp;saveAllProfiles(appData);RL.textContent=dp.name}})();
 })();
 </script>
 </body>
