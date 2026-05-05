@@ -39,8 +39,9 @@
         .profile-actions button{background:transparent;border:1px solid rgba(255,255,255,0.3);color:white;border-radius:8px;padding:2px 8px;font-size:0.7rem;cursor:pointer}
         #historyBtn,#progressBtn{position:absolute;right:10px;z-index:65;writing-mode:vertical-lr;letter-spacing:3px;background:var(--accent);border:none;color:white;padding:10px 5px;border-radius:12px;font-size:0.8rem;cursor:pointer}
         #historyBtn{top:30%;transform:translateY(-50%)} #progressBtn{top:50%;transform:translateY(-50%);background:#ffa500}
-        #pauseOverlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);display:none;justify-content:center;align-items:center;z-index:50;font-size:2.5rem;font-weight:bold;color:white;text-shadow:0 0 25px var(--accent);cursor:pointer}
+        #pauseOverlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);display:none;justify-content:center;align-items:center;z-index:50;flex-direction:column;gap:20px;font-size:2.5rem;font-weight:bold;color:white;text-shadow:0 0 25px var(--accent);cursor:pointer}
         #pauseOverlay.visible{display:flex}
+        #endGameBtn{font-size:1.2rem;padding:10px 25px;border-radius:20px;background:#ff4444;color:white;border:none;cursor:pointer;font-weight:bold;margin-top:10px;}
         #gameOverMsg{position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.9);padding:25px 40px;border-radius:20px;text-align:center;font-size:1.3rem;backdrop-filter:blur(10px);border:2px solid var(--accent);color:white;display:none;z-index:60;animation:fadeIn 0.4s}
         #gameOverMsg.show{display:block} @keyframes fadeIn{from{opacity:0;transform:translate(-50%,-40px)}to{opacity:1;transform:translate(-50%,-50%)}}
         #comboDisplay{position:absolute;top:90px;left:50%;transform:translateX(-50%);font-size:2rem;font-weight:bold;color:#ffd700;text-shadow:0 0 20px #ffaa00,0 0 40px #ff6600;z-index:40;transition:opacity 0.15s;opacity:0;pointer-events:none;white-space:nowrap}
@@ -64,9 +65,7 @@
         body.light-mode .setting-group select { background: #333 !important; color: white !important; }
         body.light-mode #title { color: #cc0000 !important; }
         body.light-mode #comboDisplay { text-shadow: none !important; }
-        /* 结束弹窗按钮强化 */
         #restartBtn { background: #ff6b6b !important; color: white !important; font-weight: bold; padding: 8px 20px; font-size: 1rem; }
-        .ui-hidden { visibility: hidden !important; pointer-events: none; }
     </style>
 </head>
 <body>
@@ -88,7 +87,10 @@
     <div id="missDisplay">💔 剩余机会 <span id="missCount">3</span></div>
     <button id="historyBtn">📖 错词</button><button id="progressBtn">📈 进步</button>
     <div id="mistakePanel"></div><div id="progressPanel"><canvas id="progressCanvas" width="180" height="120"></canvas></div>
-    <div id="pauseOverlay">⏸️ 暂停中</div>
+    <div id="pauseOverlay">
+        <span>⏸️ 暂停中</span>
+        <button id="endGameBtn">结束本局游戏</button>
+    </div>
     <div id="gameOverMsg"><div>💥 游戏结束</div><div style="font-size:1.1rem;margin-top:10px">最终得分：<span id="finalScore">0</span></div><div style="font-size:1rem;margin-top:5px" id="speedStat"></div><button class="btn" id="restartBtn" style="margin-top:15px">🔄 再来一局</button></div>
 </div>
 <script>
@@ -109,7 +111,7 @@
           RL=document.getElementById('roleLabel'),PM=document.getElementById('profileModal'),PL=document.getElementById('profileList'),
           AP=document.getElementById('addProfileBtn'),NP=document.getElementById('newProfileName'),CA=document.getElementById('confirmAddBtn'),
           CL=document.getElementById('cancelAddBtn'),CP=document.getElementById('closeProfileBtn'),
-          SS=document.getElementById('speedStat'),SP=document.getElementById('speedPanel');
+          SS=document.getElementById('speedStat'),EB=document.getElementById('endGameBtn');
     const DW=1280,DH=800;
     const colorSchemes={
         green:{bg:'#1a2421',cbg:'radial-gradient(circle at center, #162e22, #0b4229)',a:'#2ecc71',w:'#f1f1f1',wa:'#2ecc71',uibg:'rgba(0,0,0,0.3)',bbg:'rgba(255,255,255,0.15)',bh:'rgba(46,204,113,0.4)',t:'white',ibg:'rgba(255,255,255,0.12)',py:'rgba(200,255,220,0.7)'},
@@ -193,23 +195,23 @@
     function stopLoop(){if(animId){cancelAnimationFrame(animId);animId=null}}
     function gameLoop(){if(isPaused||isGameOver||!gameStarted){animId=requestAnimationFrame(gameLoop);return}for(let i=activeWords.length-1;i>=0;i--){const w=activeWords[i];w.y+=w.speed;w.element.style.top=w.y+'px';if(w.y>DH){missCount++;upMiss();w.element.remove();activeWords.splice(i,1);resetCombo();playTone(200,'triangle',0.2,0.2);if(missCount>=maxMisses){endGame();return}updateActive()}}checkAndSpawn();animId=requestAnimationFrame(gameLoop);}
     function resetGameState(){stopLoop();clearAllWords();I.value='';score=0;missCount=0;combo=0;upScore();upMiss();upCombo();isGameOver=false;isPaused=false;PO.classList.remove('visible');GO.classList.remove('show');I.disabled=false;wordCount=0;startTime=Date.now();SS.textContent='';}
-    function applyModeSettings(){if(curMode==='endless'){speedLevel=1;maxMisses=5;missCount=0;endlessFlags={2:false,3:false,4:false,5:false};DG.style.display='none';SL.disabled=true;DS.disabled=true;MS.disabled=true}else{DG.style.display='flex';SL.disabled=false;DS.disabled=false;MS.disabled=false}upSpeed();upMiss();}
-    function toggleGameUI(hide){const groups=[TE,document.getElementById('modeGroup'),DG,document.getElementById('themeGroup'),document.getElementById('colorGroup'),document.getElementById('controlBtns')];if(curMode==='endless')groups.push(SP);if(hide){if(curMode==='normal')SP.classList.remove('ui-hidden');groups.forEach(el=>el.classList.add('ui-hidden'));}else{groups.forEach(el=>el.classList.remove('ui-hidden'));}}
     function resetGame(){
         if(!curProfile){alert('请先创建或选择一个角色！');showProfileModal();return}
         I.disabled=false;resetGameState();gameStarted=true;curMode=MS.value;curTheme=TS.value;
         if(curMode==='normal'){curDiff=DS.value;if(curDiff==='easy'){speedLevel=2;maxMisses=5}else if(curDiff==='medium'){speedLevel=3;maxMisses=3}else{speedLevel=4;maxMisses=2}}
+        else{speedLevel=1;maxMisses=5;missCount=0;endlessFlags={2:false,3:false,4:false,5:false};}
         applyModeSettings();remainingPhrases=shuffle(getWordPool());upMiss();spawnWord();
-        toggleGameUI(true);
         animId=requestAnimationFrame(gameLoop);I.focus();
     }
     function startNewGame(){if(!appData.profiles.length){alert('请先创建一个角色！');showProfileModal();return}I.disabled=false;SO.classList.add('hidden');resetGame();}
-    function endGame(save=true){if(isGameOver)return;isGameOver=true;stopLoop();clearAllWords();FS.textContent=score;const elapsed=(Date.now()-startTime)/60000;const speed=elapsed>0?Math.round(wordCount/elapsed):0;SS.textContent=`打字速度：${speed} 字/分钟`;GO.classList.add('show');I.blur();gameStarted=false;I.disabled=true;if(save)saveDailyProgress(score,0);if(curMode==='endless')MS.disabled=false;toggleGameUI(false);}
-    function togglePause(){if(isGameOver||!gameStarted)return;isPaused=!isPaused;if(isPaused){PO.classList.add('visible');I.blur();I.disabled=true;toggleGameUI(false);}else{PO.classList.remove('visible');I.disabled=false;checkAndSpawn();I.focus();toggleGameUI(true);}updateActive();}
+    function endGame(save=true){if(isGameOver)return;isGameOver=true;stopLoop();clearAllWords();FS.textContent=score;const elapsed=(Date.now()-startTime)/60000;const speed=elapsed>0?Math.round(wordCount/elapsed):0;SS.textContent=`打字速度：${speed} 字/分钟`;GO.classList.add('show');I.blur();gameStarted=false;I.disabled=true;if(save)saveDailyProgress(score,0);if(curMode==='endless')MS.disabled=false;}
+    function togglePause(){if(isGameOver||!gameStarted)return;isPaused=!isPaused;if(isPaused){PO.classList.add('visible');I.blur();I.disabled=true;}else{PO.classList.remove('visible');I.disabled=false;checkAndSpawn();I.focus();}updateActive();}
     function checkEndlessUp(){if(curMode!=='endless')return;if(combo>=10&&!endlessFlags[2]&&speedLevel<2){speedLevel=2;endlessFlags[2]=true;maxMisses++;missCount=Math.min(missCount,maxMisses)}if(combo>=20&&speedLevel===2&&!endlessFlags[3]){speedLevel=3;endlessFlags[3]=true;maxMisses++}if(combo>=10&&speedLevel===3&&!endlessFlags[4]){speedLevel=4;endlessFlags[4]=true;maxMisses++}if(combo>=10&&speedLevel===4&&!endlessFlags[5]){speedLevel=5;endlessFlags[5]=true;maxMisses++}upSpeed();upMiss();}
     I.addEventListener('input',()=>{if(isPaused||isGameOver||!gameStarted||!activeWords.length){if(I.value!=='')I.value='';return}const cur=activeWords[0],target=cur.element.querySelector('span').textContent,val=I.value;if(target.startsWith(val)){if(val===target){combo++;upCombo();score+=10+(combo>=2?combo*2:0);upScore();wordCount++;removeWordAt(0);I.value='';updateActive();checkEndlessUp();checkAndSpawn();}}else{recordMistake(target);I.value='';resetCombo();playTone(200,'triangle',0.15,0.2)}});
     function scaleGame(){const wx=window.innerWidth,wy=window.innerHeight;const sc=Math.min(wx/DW,wy/DH);G.style.transform=`translate(-50%,-50%) scale(${sc})`;G.style.position='absolute';G.style.left='50%';G.style.top='50%'}
     window.addEventListener('resize',scaleGame);window.addEventListener('load',scaleGame);scaleGame();
+    function applyModeSettings(){if(curMode==='endless'){DG.style.display='none';SL.disabled=true;DS.disabled=true;MS.disabled=true}else{DG.style.display='flex';SL.disabled=false;DS.disabled=false;MS.disabled=false}upSpeed();upMiss();}
+    EB.addEventListener('click',()=>{if(isPaused)endGame();});
     SB.addEventListener('click',()=>{initAudio();startNewGame()});
     PB.addEventListener('click',e=>{e.stopPropagation();togglePause()});
     NB.addEventListener('click',e=>{e.stopPropagation();resetGame()});
@@ -219,7 +221,7 @@
     DS.addEventListener('change',e=>{curDiff=e.target.value});TS.addEventListener('change',e=>{curTheme=e.target.value});
     G.addEventListener('click',e=>{if((e.target===G||e.target===PO)&&!isPaused&&!isGameOver&&gameStarted)I.focus()});
     document.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();if(!isGameOver&&gameStarted)togglePause()}if(e.key==='Enter'&&isGameOver&&GO.classList.contains('show')){e.preventDefault();RB.click()}});
-    PO.addEventListener('click',()=>{if(isPaused&&!isGameOver)togglePause()});
+    PO.addEventListener('click',e=>{if(e.target===PO) togglePause();});
     HB.addEventListener('click',e=>{e.stopPropagation();MP.classList.toggle('visible');if(MP.classList.contains('visible'))renderMistakePanel()});
     PB2.addEventListener('click',e=>{e.stopPropagation();PP.classList.toggle('visible');if(PP.classList.contains('visible'))drawProgressChart()});
     document.addEventListener('click',e=>{if(!MP.contains(e.target)&&e.target!==HB)MP.classList.remove('visible');if(!PP.contains(e.target)&&e.target!==PB2)PP.classList.remove('visible');if(!PM.contains(e.target)&&e.target!==TE)hideProfileModal()});
