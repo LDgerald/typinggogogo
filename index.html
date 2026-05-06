@@ -194,7 +194,7 @@
     function resetGameState(){stopLoop();clearAllWords();I.value='';score=0;missCount=0;combo=0;upScore();upMiss();upCombo();isGameOver=false;isPaused=false;PO.classList.remove('visible');GO.classList.remove('show');I.disabled=false;wordCount=0;startTime=Date.now();SS.textContent='';}
     function applyModeSettings(){
         if(curMode==='endless'){
-            speedLevel=2; // 无尽模式初始速度改为2档
+            speedLevel=2; // 初始2档
             maxMisses=5;missCount=0;
             endlessFlags={2:false,3:false,4:false,5:false};
             DG.style.display='none';SL.disabled=true;DS.disabled=true;MS.disabled=true
@@ -221,10 +221,16 @@
     function togglePause(){if(isGameOver||!gameStarted)return;isPaused=!isPaused;if(isPaused){PO.classList.add('visible');I.blur();I.disabled=true;}else{PO.classList.remove('visible');I.disabled=false;checkAndSpawn();I.focus();}updateActive();}
     function checkEndlessUp(){
         if(curMode!=='endless')return;
-        if(combo>=10&&!endlessFlags[2]&&speedLevel<2){speedLevel=2;endlessFlags[2]=true;maxMisses++;missCount=Math.min(missCount,maxMisses)}
-        if(combo>=20&&speedLevel===2&&!endlessFlags[3]){speedLevel=3;endlessFlags[3]=true;maxMisses++}
-        if(combo>=10&&speedLevel===3&&!endlessFlags[4]){speedLevel=4;endlessFlags[4]=true;maxMisses++}
-        if(combo>=10&&speedLevel===4&&!endlessFlags[5]){speedLevel=5;endlessFlags[5]=true;maxMisses++}
+        // 使用 else if 避免一次检查连续升级
+        if(combo>=10 && !endlessFlags[2] && speedLevel<2){
+            speedLevel=2; endlessFlags[2]=true; maxMisses++; missCount=Math.min(missCount,maxMisses);
+        } else if(combo>=20 && speedLevel===2 && !endlessFlags[3]){
+            speedLevel=3; endlessFlags[3]=true; maxMisses++;
+        } else if(combo>=10 && speedLevel===3 && !endlessFlags[4]){
+            speedLevel=4; endlessFlags[4]=true; maxMisses++;
+        } else if(combo>=10 && speedLevel===4 && !endlessFlags[5]){
+            speedLevel=5; endlessFlags[5]=true; maxMisses++;
+        }
         upSpeed();upMiss();
     }
     I.addEventListener('input',()=>{if(isPaused||isGameOver||!gameStarted||!activeWords.length){if(I.value!=='')I.value='';return}const cur=activeWords[0],target=cur.element.querySelector('span').textContent,val=I.value;if(target.startsWith(val)){if(val===target){combo++;upCombo();score+=10+(combo>=2?combo*2:0);upScore();wordCount++;removeWordAt(0);I.value='';updateActive();checkEndlessUp();checkAndSpawn();}}else{recordMistake(target);I.value='';resetCombo();playTone(200,'triangle',0.15,0.2)}});
