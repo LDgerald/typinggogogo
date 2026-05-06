@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>打字gogogo · 最终优化版</title>
+    <title>打字gogogo · 最终版</title>
     <script src="https://unpkg.com/pinyin-pro@3.20.4/dist/index.js"></script>
     <style>
         :root {
@@ -58,7 +58,6 @@
         @keyframes pulse{0%{text-shadow:0 0 10px var(--accent)}50%{text-shadow:0 0 20px var(--accent)}100%{text-shadow:0 0 10px var(--accent)}}
         .word.exploding{animation:explodeWord 0.4s ease-out forwards!important} @keyframes explodeWord{0%{color:#00ff88;transform:scale(1.5);opacity:1}100%{opacity:0}}
         .score-popup{position:absolute;font-size:2.2rem;font-weight:bold;color:#ffd700;z-index:80;animation:floatUp 0.8s ease-out forwards} @keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(0.5)}100%{opacity:0;transform:translateY(-90px) scale(1)}}
-        /* 白底模式 */
         body.light-mode .word, body.light-mode .word.active, body.light-mode .word .pinyin { text-shadow: none !important; }
         body.light-mode .word { color: #cc0000 !important; } body.light-mode .word.active { color: #cc0000 !important; }
         body.light-mode .word .pinyin { color: rgba(0,0,0,0.55) !important; }
@@ -133,7 +132,6 @@
     const savedColor=localStorage.getItem('typingColorScheme')||'green';CS.value=savedColor;applyColor(savedColor);
     CS.addEventListener('change',e=>applyColor(e.target.value));
 
-    // 角色
     const SK='typingGameProfiles';
     function loadAllProfiles(){
         const raw=localStorage.getItem(SK);if(raw)return JSON.parse(raw);
@@ -166,7 +164,6 @@
     CP.addEventListener('click',hideProfileModal);
     TE.addEventListener('click',e=>{e.stopPropagation();showProfileModal()});
 
-    // 游戏状态
     let score=0,activeWords=[],animId=null,isPaused=false,isGameOver=false,gameStarted=false;
     let speedLevel=3,missCount=0,maxMisses=3,remainingPhrases=[],combo=0;
     let curDiff='medium',curTheme='standard',curMode='normal';
@@ -195,22 +192,44 @@
     function stopLoop(){if(animId){cancelAnimationFrame(animId);animId=null}}
     function gameLoop(){if(isPaused||isGameOver||!gameStarted){animId=requestAnimationFrame(gameLoop);return}for(let i=activeWords.length-1;i>=0;i--){const w=activeWords[i];w.y+=w.speed;w.element.style.top=w.y+'px';if(w.y>DH){missCount++;upMiss();w.element.remove();activeWords.splice(i,1);resetCombo();playTone(200,'triangle',0.2,0.2);if(missCount>=maxMisses){endGame();return}updateActive()}}checkAndSpawn();animId=requestAnimationFrame(gameLoop);}
     function resetGameState(){stopLoop();clearAllWords();I.value='';score=0;missCount=0;combo=0;upScore();upMiss();upCombo();isGameOver=false;isPaused=false;PO.classList.remove('visible');GO.classList.remove('show');I.disabled=false;wordCount=0;startTime=Date.now();SS.textContent='';}
+    function applyModeSettings(){
+        if(curMode==='endless'){
+            speedLevel=2; // 无尽模式初始速度改为2档
+            maxMisses=5;missCount=0;
+            endlessFlags={2:false,3:false,4:false,5:false};
+            DG.style.display='none';SL.disabled=true;DS.disabled=true;MS.disabled=true
+        }else{
+            DG.style.display='flex';SL.disabled=false;DS.disabled=false;MS.disabled=false
+        }
+        upSpeed();upMiss();
+    }
     function resetGame(){
         if(!curProfile){alert('请先创建或选择一个角色！');showProfileModal();return}
         I.disabled=false;resetGameState();gameStarted=true;curMode=MS.value;curTheme=TS.value;
-        if(curMode==='normal'){curDiff=DS.value;if(curDiff==='easy'){speedLevel=2;maxMisses=5}else if(curDiff==='medium'){speedLevel=3;maxMisses=3}else{speedLevel=4;maxMisses=2}}
-        else{speedLevel=1;maxMisses=5;missCount=0;endlessFlags={2:false,3:false,4:false,5:false};}
-        applyModeSettings();remainingPhrases=shuffle(getWordPool());upMiss();spawnWord();
+        if(curMode==='normal'){
+            curDiff=DS.value;
+            if(curDiff==='easy'){speedLevel=2;maxMisses=5}
+            else if(curDiff==='medium'){speedLevel=3;maxMisses=3}
+            else{speedLevel=4;maxMisses=2}
+        }
+        applyModeSettings();
+        remainingPhrases=shuffle(getWordPool());upMiss();spawnWord();
         animId=requestAnimationFrame(gameLoop);I.focus();
     }
     function startNewGame(){if(!appData.profiles.length){alert('请先创建一个角色！');showProfileModal();return}I.disabled=false;SO.classList.add('hidden');resetGame();}
     function endGame(save=true){if(isGameOver)return;isGameOver=true;stopLoop();clearAllWords();FS.textContent=score;const elapsed=(Date.now()-startTime)/60000;const speed=elapsed>0?Math.round(wordCount/elapsed):0;SS.textContent=`打字速度：${speed} 字/分钟`;GO.classList.add('show');I.blur();gameStarted=false;I.disabled=true;if(save)saveDailyProgress(score,0);if(curMode==='endless')MS.disabled=false;}
     function togglePause(){if(isGameOver||!gameStarted)return;isPaused=!isPaused;if(isPaused){PO.classList.add('visible');I.blur();I.disabled=true;}else{PO.classList.remove('visible');I.disabled=false;checkAndSpawn();I.focus();}updateActive();}
-    function checkEndlessUp(){if(curMode!=='endless')return;if(combo>=10&&!endlessFlags[2]&&speedLevel<2){speedLevel=2;endlessFlags[2]=true;maxMisses++;missCount=Math.min(missCount,maxMisses)}if(combo>=20&&speedLevel===2&&!endlessFlags[3]){speedLevel=3;endlessFlags[3]=true;maxMisses++}if(combo>=10&&speedLevel===3&&!endlessFlags[4]){speedLevel=4;endlessFlags[4]=true;maxMisses++}if(combo>=10&&speedLevel===4&&!endlessFlags[5]){speedLevel=5;endlessFlags[5]=true;maxMisses++}upSpeed();upMiss();}
+    function checkEndlessUp(){
+        if(curMode!=='endless')return;
+        if(combo>=10&&!endlessFlags[2]&&speedLevel<2){speedLevel=2;endlessFlags[2]=true;maxMisses++;missCount=Math.min(missCount,maxMisses)}
+        if(combo>=20&&speedLevel===2&&!endlessFlags[3]){speedLevel=3;endlessFlags[3]=true;maxMisses++}
+        if(combo>=10&&speedLevel===3&&!endlessFlags[4]){speedLevel=4;endlessFlags[4]=true;maxMisses++}
+        if(combo>=10&&speedLevel===4&&!endlessFlags[5]){speedLevel=5;endlessFlags[5]=true;maxMisses++}
+        upSpeed();upMiss();
+    }
     I.addEventListener('input',()=>{if(isPaused||isGameOver||!gameStarted||!activeWords.length){if(I.value!=='')I.value='';return}const cur=activeWords[0],target=cur.element.querySelector('span').textContent,val=I.value;if(target.startsWith(val)){if(val===target){combo++;upCombo();score+=10+(combo>=2?combo*2:0);upScore();wordCount++;removeWordAt(0);I.value='';updateActive();checkEndlessUp();checkAndSpawn();}}else{recordMistake(target);I.value='';resetCombo();playTone(200,'triangle',0.15,0.2)}});
     function scaleGame(){const wx=window.innerWidth,wy=window.innerHeight;const sc=Math.min(wx/DW,wy/DH);G.style.transform=`translate(-50%,-50%) scale(${sc})`;G.style.position='absolute';G.style.left='50%';G.style.top='50%'}
     window.addEventListener('resize',scaleGame);window.addEventListener('load',scaleGame);scaleGame();
-    function applyModeSettings(){if(curMode==='endless'){DG.style.display='none';SL.disabled=true;DS.disabled=true;MS.disabled=true}else{DG.style.display='flex';SL.disabled=false;DS.disabled=false;MS.disabled=false}upSpeed();upMiss();}
     EB.addEventListener('click',()=>{if(isPaused)endGame();});
     SB.addEventListener('click',()=>{initAudio();startNewGame()});
     PB.addEventListener('click',e=>{e.stopPropagation();togglePause()});
